@@ -534,28 +534,29 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
 
       {/* Climate announcement banner */}
       <section className="bg-[#c8102e] border-y border-[#ff4a62]/30 overflow-hidden">
-        <div className="relative flex whitespace-nowrap py-4">
-          {[0, 1].map((copy) => (
-            <motion.div
-              key={copy}
-              className="flex min-w-full items-center justify-around gap-10 px-5"
-              animate={{ x: ["0%", "-100%"] }}
-              transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-            >
+        <div className="relative whitespace-nowrap py-4">
+          <motion.div
+            className="flex w-max items-center"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          >
+            {[0, 1].map((copy) => (
+              <div key={copy} className="flex shrink-0 items-center gap-16 pr-16">
               {[
                 "Climatisation : anticipez les vacances, les créneaux partent vite",
                 "Recharge, diagnostic et contrôle clim chez AMC Auto Moto",
                 "Prenez rendez-vous avant le rush des départs",
               ].map((message) => (
-                <div key={message} className="flex items-center gap-4">
+                <div key={`${copy}-${message}`} className="flex items-center gap-4">
                   <span className="h-1.5 w-1.5 bg-white rounded-full" />
-                  <span className="font-heading text-white text-lg md:text-xl font-bold tracking-[0.12em] uppercase">
+                  <span className="font-heading text-white text-base md:text-lg font-bold tracking-[0.12em] uppercase">
                     {message}
                   </span>
                 </div>
               ))}
-            </motion.div>
-          ))}
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
