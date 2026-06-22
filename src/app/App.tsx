@@ -533,7 +533,7 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
       </section>
 
       {/* Climate announcement banner */}
-      <section className="bg-[#c8102e] border-y border-[#ff4a62]/30 overflow-hidden">
+      <section className="bg-[#0077c8] border-y border-[#6ed7ff]/35 overflow-hidden">
         <div className="relative whitespace-nowrap py-4">
           <motion.div
             className="flex w-max items-center"
@@ -548,7 +548,7 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
                 "Prenez rendez-vous avant le rush des départs",
               ].map((message) => (
                 <div key={`${copy}-${message}`} className="flex items-center gap-4">
-                  <span className="h-1.5 w-1.5 bg-white rounded-full" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#bff2ff]" />
                   <span className="font-heading text-white text-base md:text-lg font-bold tracking-[0.12em] uppercase">
                     {message}
                   </span>
