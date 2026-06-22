@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import {
   Phone, MapPin, Clock, Menu, X,
   Wrench, Settings, Zap, Gauge, Shield, Wind,
   ArrowRight, Mail, CheckCircle, Plus, Pencil, Trash2, LogOut, Lock,
   Instagram, CreditCard,
 } from "lucide-react"
-import { motion, useInView, useMotionValue, useTransform, animate, AnimatePresence } from "motion/react"
+import { motion, AnimatePresence } from "motion/react"
 import logoImg from "@/imports/image-2.png"
 import garageExteriorImg from "@/imports/image garage exterieur.png"
 import garageInteriorImg from "@/imports/image garage interrieur voiture premier plan.png"
@@ -152,17 +152,6 @@ const pageTransition = {
   initial:  { opacity: 0, y: 24 },
   animate:  { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
   exit:     { opacity: 0, y: -16, transition: { duration: 0.3 } },
-}
-
-function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null)
-  const count = useMotionValue(0)
-  const rounded = useTransform(count, (v) => Math.round(v).toString() + suffix)
-  const inView = useInView(ref, { once: true, margin: "-80px" })
-  useEffect(() => {
-    if (inView) animate(count, to, { duration: 2, ease: "easeOut" })
-  }, [inView, count, to])
-  return <motion.span ref={ref}>{rounded}</motion.span>
 }
 
 // --- Data ---------------------------------------------------------------------
@@ -543,9 +532,36 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
         </motion.div>
       </section>
 
+      {/* Climate announcement banner */}
+      <section className="bg-[#c8102e] border-y border-[#ff4a62]/30 overflow-hidden">
+        <div className="relative flex whitespace-nowrap py-4">
+          {[0, 1].map((copy) => (
+            <motion.div
+              key={copy}
+              className="flex min-w-full items-center justify-around gap-10 px-5"
+              animate={{ x: ["0%", "-100%"] }}
+              transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+            >
+              {[
+                "Climatisation : anticipez les vacances, les créneaux partent vite",
+                "Recharge, diagnostic et contrôle clim chez AMC Auto Moto",
+                "Prenez rendez-vous avant le rush des départs",
+              ].map((message) => (
+                <div key={message} className="flex items-center gap-4">
+                  <span className="h-1.5 w-1.5 bg-white rounded-full" />
+                  <span className="font-heading text-white text-lg md:text-xl font-bold tracking-[0.12em] uppercase">
+                    {message}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       {/* Stats strip */}
       <motion.section
-        className="bg-[#111111] border-y border-white/8"
+        className="hidden"
         initial="hidden" whileInView="show" viewport={{ once: true, margin: "-60px" }}
         variants={stagger(0.12)}
       >
@@ -557,7 +573,7 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
           ].map(({ count, suffix, text, label }) => (
             <motion.div key={label} variants={fadeUp} className="flex flex-col items-center py-7 sm:py-5">
               <span className="font-heading text-3xl md:text-4xl text-white font-bold tracking-tight">
-                {count !== null ? <CountUp to={count} suffix={suffix} /> : text}
+                {count !== null ? `${count}${suffix}` : text}
               </span>
               <span className="text-white/35 text-[10px] tracking-[0.25em] uppercase mt-1.5">{label}</span>
             </motion.div>
