@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import {
   Phone, MapPin, Clock, Menu, X,
   Wrench, Settings, Zap, Gauge, Shield, Wind,
@@ -348,6 +348,17 @@ const PRESS_CLIPPINGS = [
   { src: articleEthanolImg, title: "Conversion éthanol", source: "L'Est Républicain" },
   { src: articleSolidarityImg, title: "Action solidaire locale", source: "L'Est Républicain" },
   { src: serviceIciImg, title: "Carrosserie, pare-brise, climatisation", source: "Services complémentaires" },
+]
+
+const CLIENT_REVIEWS = [
+  { text: "Tres satisfait, pas arnaque.", author: "Client AMC Auto Moto" },
+  { text: "Tres professionnel et competent, je recommande.", author: "Client AMC Auto Moto" },
+  { text: "Garage tres competent, a l'ecoute de la clientele, tarifs tres corrects.", author: "Client AMC Auto Moto" },
+  { text: "Garagiste au top, reactif, prix correct. Je ne changerai jamais.", author: "Client AMC Auto Moto" },
+  { text: "Tout au top, bravo !", author: "Client AMC Auto Moto" },
+  { text: "Travail rapide, delais respectes, et tres bon tarif.", author: "Client AMC Auto Moto" },
+  { text: "Tres bonne accueil, et toujours de bon conseil.", author: "Client AMC Auto Moto" },
+  { text: "Garage vraiment professionnel et tres competent.", author: "Client AMC Auto Moto" },
 ]
 
 type LocalPage = Exclude<Page, "accueil" | "services" | "galerie" | "apropos" | "contact" | "admin">
@@ -752,6 +763,94 @@ function Footer({ navigate, settings }: { navigate: (p: Page) => void; settings:
 }
 
 // --- Home Page ----------------------------------------------------------------
+function CustomerReviewsCarousel() {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [paused, setPaused] = useState(false)
+
+  const scrollByCard = (direction: 1 | -1) => {
+    const track = trackRef.current
+    if (!track) return
+    const card = track.querySelector<HTMLElement>("[data-review-card]")
+    const step = card ? card.offsetWidth + 16 : track.clientWidth
+    track.scrollBy({ left: direction * step, behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    if (paused) return
+    const timer = window.setInterval(() => {
+      const track = trackRef.current
+      if (!track) return
+      const nextLeft = track.scrollLeft + track.clientWidth
+      const atEnd = nextLeft >= track.scrollWidth - 12
+      track.scrollTo({ left: atEnd ? 0 : nextLeft, behavior: "smooth" })
+    }, 5200)
+
+    return () => window.clearInterval(timer)
+  }, [paused])
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
+      <div
+        ref={trackRef}
+        className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2"
+        aria-label="Carrousel d'avis clients AMC Auto Moto"
+      >
+        {CLIENT_REVIEWS.map((review) => (
+          <article
+            key={review.text}
+            data-review-card
+            tabIndex={0}
+            className="snap-start shrink-0 w-[86%] sm:w-[calc((100%_-_1rem)/2)] lg:w-[calc((100%_-_2rem)/3)] xl:w-[calc((100%_-_3rem)/4)] min-h-56 border border-white/10 bg-[#111111] p-5 flex flex-col justify-between focus:outline-none focus:border-[#c8102e]/70"
+          >
+            <div>
+              <div className="flex items-center justify-between gap-3 mb-5">
+                <div className="flex items-center gap-0.5 text-[#c8102e]" role="img" aria-label="Avis 5 sur 5">
+                  {[0, 1, 2, 3, 4].map((star) => (
+                    <Star key={star} size={15} fill="currentColor" strokeWidth={1.5} />
+                  ))}
+                </div>
+                <span className="text-white/30 text-[9px] font-bold tracking-[0.18em] uppercase">Avis verifie</span>
+              </div>
+              <p className="text-white/72 text-base leading-relaxed">"{review.text}"</p>
+            </div>
+            <p className="mt-6 text-white/38 text-xs font-bold tracking-[0.16em] uppercase">{review.author}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-5 flex items-center justify-between gap-3">
+        <p className="text-white/35 text-xs leading-relaxed">
+          AMC Auto Moto est note 4,9/5 sur 518 avis clients verifies AlloGarage.
+        </p>
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={() => scrollByCard(-1)}
+            className="h-10 w-10 border border-white/15 text-white/55 hover:text-white hover:border-white/35 transition-colors"
+            aria-label="Avis precedent"
+          >
+            ‹
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollByCard(1)}
+            className="h-10 w-10 border border-white/15 text-white/55 hover:text-white hover:border-white/35 transition-colors"
+            aria-label="Avis suivant"
+          >
+            ›
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function HomePage({ navigate, settings }: { navigate: (p: Page) => void; settings: SiteSettings }) {
   return (
     <motion.div {...pageTransition}>
@@ -928,7 +1027,7 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
             <div>
               <span className="text-[#c8102e] text-[10px] tracking-[0.35em] uppercase block mb-4">Avis clients</span>
               <h2 className="font-heading text-4xl md:text-5xl text-white font-bold tracking-tight mb-5">
-                La confiance se construit aussi avec vos retours
+                Paroles de clients
               </h2>
               <p className="text-white/55 text-sm md:text-base leading-relaxed max-w-xl">
                 Avant de confier votre véhicule, vous pouvez vous appuyer sur l'expérience de clients qui sont déjà passés par l'atelier.
@@ -973,25 +1072,8 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
               </div>
             </div>
 
-            <div className="relative mt-8 grid grid-cols-1 md:grid-cols-2 gap-3">
-              {[
-                "Tres professionnel et competent, je recommande.",
-                "Garage tres competent, a l'ecoute de la clientele, tarifs tres corrects.",
-                "Garagiste au top, reactif. Prix correct. Je ne changerai jamais.",
-                "Travail rapide, delais respectes, et tres bon tarif.",
-              ].map((review) => (
-                <div key={review} className="border border-white/10 bg-[#111111] p-4">
-                  <div className="flex items-center justify-between gap-3 mb-3">
-                    <div className="flex items-center gap-0.5 text-[#c8102e]" role="img" aria-label="Avis 5 sur 5">
-                      {[0, 1, 2, 3, 4].map((star) => (
-                        <Star key={star} size={13} fill="currentColor" strokeWidth={1.5} />
-                      ))}
-                    </div>
-                    <span className="text-white/30 text-[9px] font-bold tracking-[0.18em] uppercase">Verifie AFNOR</span>
-                  </div>
-                  <p className="text-white/65 text-sm leading-relaxed">"{review}"</p>
-                </div>
-              ))}
+            <div className="relative mt-8">
+              <CustomerReviewsCarousel />
             </div>
           </motion.div>
         </motion.div>
