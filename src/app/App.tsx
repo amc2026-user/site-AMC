@@ -3,7 +3,7 @@ import {
   Phone, MapPin, Clock, Menu, X,
   Wrench, Settings, Zap, Gauge, Shield, Wind,
   ArrowRight, Mail, CheckCircle, Plus, Pencil, Trash2, LogOut, Lock,
-  Instagram, CreditCard,
+  Instagram, CreditCard, Star,
 } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
 import logoImg from "@/imports/image-2.png"
@@ -581,6 +581,66 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
           ))}
         </div>
       </motion.section>
+
+      <section className="px-4 sm:px-6 py-18 md:py-24 bg-[#0a0a0a] border-b border-white/8">
+        <motion.div
+          className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-14 items-stretch"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={stagger(0.1)}
+        >
+          <motion.div variants={fadeUp} className="border border-white/12 bg-[#111111] p-7 md:p-9 flex flex-col justify-between">
+            <div>
+              <span className="text-[#c8102e] text-[10px] tracking-[0.35em] uppercase block mb-4">Avis clients</span>
+              <h2 className="font-heading text-4xl md:text-5xl text-white font-bold tracking-tight mb-5">
+                La confiance se construit aussi avec vos retours
+              </h2>
+              <p className="text-white/55 text-sm md:text-base leading-relaxed max-w-xl">
+                Avant de confier votre véhicule, vous pouvez vous appuyer sur l'expérience de clients qui sont déjà passés par l'atelier.
+              </p>
+            </div>
+            <a
+              href="https://www.allogarage.fr/garages/details-garage-AMC-AUTO-MOTO-47503.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 inline-flex w-full sm:w-auto items-center justify-center gap-3 bg-[#c8102e] text-white px-7 py-4 font-bold tracking-[0.18em] uppercase text-xs hover:bg-[#a50d26] transition-colors"
+            >
+              Voir les avis <ArrowRight size={14} />
+            </a>
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="relative overflow-hidden border border-white/12 bg-[#0c0c0c] p-7 md:p-9">
+            <div className="absolute right-0 top-0 h-28 w-28 bg-[#c8102e]/10 blur-3xl" />
+            <div className="relative flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 mb-8">
+              <div>
+                <p className="text-white/35 text-[10px] tracking-[0.25em] uppercase mb-3">Source vérifiée</p>
+                <p className="font-heading text-2xl text-white font-bold">AlloGarage</p>
+              </div>
+              <div className="flex items-center gap-1 text-[#c8102e]" aria-label="Note de 4,9 sur 5">
+                {[0, 1, 2, 3, 4].map((star) => (
+                  <Star key={star} size={22} fill="currentColor" strokeWidth={1.4} />
+                ))}
+              </div>
+            </div>
+
+            <div className="relative grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-7 sm:gap-10 items-center">
+              <div>
+                <div className="font-heading text-6xl md:text-7xl text-white font-bold leading-none">4,9<span className="text-[#c8102e] text-4xl md:text-5xl">/5</span></div>
+                <p className="text-white/45 text-sm mt-3">sur 518 avis clients</p>
+              </div>
+              <div className="border-t sm:border-t-0 sm:border-l border-white/10 pt-6 sm:pt-0 sm:pl-8">
+                <p className="text-white/70 text-lg md:text-xl leading-relaxed font-medium">
+                  Un garage recommandé pour son sérieux, sa transparence et sa prise en charge.
+                </p>
+                <p className="text-white/40 text-sm leading-relaxed mt-4">
+                  Une preuve sociale claire pour vous aider à choisir un atelier local avec plus de sérénité.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </section>
 
       <section className="py-24 md:py-32 px-4 sm:px-6 max-w-7xl mx-auto">
         <motion.div
