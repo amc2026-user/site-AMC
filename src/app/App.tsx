@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react"
+import type { PointerEvent } from "react"
 import {
   Phone, MapPin, Clock, Menu, X,
   Wrench, Settings, Zap, Gauge, Shield, Wind,
@@ -351,14 +352,21 @@ const PRESS_CLIPPINGS = [
 ]
 
 const CLIENT_REVIEWS = [
-  { text: "Tres satisfait, pas arnaque.", author: "Client AMC Auto Moto" },
-  { text: "Tres professionnel et competent, je recommande.", author: "Client AMC Auto Moto" },
-  { text: "Garage tres competent, a l'ecoute de la clientele, tarifs tres corrects.", author: "Client AMC Auto Moto" },
-  { text: "Garagiste au top, reactif, prix correct. Je ne changerai jamais.", author: "Client AMC Auto Moto" },
-  { text: "Tout au top, bravo !", author: "Client AMC Auto Moto" },
-  { text: "Travail rapide, delais respectes, et tres bon tarif.", author: "Client AMC Auto Moto" },
-  { text: "Tres bonne accueil, et toujours de bon conseil.", author: "Client AMC Auto Moto" },
-  { text: "Garage vraiment professionnel et tres competent.", author: "Client AMC Auto Moto" },
+  { author: "Yohan", text: "Bon garage, je recommande." },
+  { author: "Aurore", text: "Service rapide et consciencieux." },
+  { author: "Raphaël", text: "M'a réparé la voiture rapidement. Prix honnête. Je recommande vivement." },
+  { author: "Xavier", text: "Très sérieux et très bon accueil. Je recommande donc AMC Auto Moto." },
+  { author: "RAJAHH", text: "Professionnel, à l'écoute. Vous pouvez y aller les yeux fermés." },
+  { author: "Max", text: "Garage au top. Travail génial. Je recommande à 100 %." },
+  { author: "Kévin", text: "Petit garage à taille humaine. Personnel sympa et à l'écoute. Prix raisonnables." },
+  { author: "Selin", text: "Prise en charge rapide. Gérant très professionnel. Je recommande vivement." },
+  { author: "Fab", text: "Très bon boulot à prix plus que correct. Très professionnel et à l'écoute." },
+  { author: "Martial", text: "Au top : prestation, rapidité, sérieux, sympa." },
+  { author: "Julien", text: "Très professionnel, très bon service moto, je recommande." },
+  { author: "Claude", text: "Excellent garage. Je recommande à 100 %." },
+  { author: "Jeremy", text: "Enfin un garage en qui on peut accorder notre confiance." },
+  { author: "Camille", text: "Super accueil, très professionnel, de bons conseils et toujours à l'écoute." },
+  { author: "Jordan", text: "Très belles prestations mécaniques et accueil professionnel." },
 ]
 
 type LocalPage = Exclude<Page, "accueil" | "services" | "galerie" | "apropos" | "contact" | "admin">
@@ -765,6 +773,9 @@ function Footer({ navigate, settings }: { navigate: (p: Page) => void; settings:
 // --- Home Page ----------------------------------------------------------------
 function CustomerReviewsCarousel() {
   const trackRef = useRef<HTMLDivElement>(null)
+  const isDraggingRef = useRef(false)
+  const startXRef = useRef(0)
+  const startScrollLeftRef = useRef(0)
   const [paused, setPaused] = useState(false)
 
   const scrollByCard = (direction: 1 | -1) => {
@@ -773,6 +784,27 @@ function CustomerReviewsCarousel() {
     const card = track.querySelector<HTMLElement>("[data-review-card]")
     const step = card ? card.offsetWidth + 16 : track.clientWidth
     track.scrollBy({ left: direction * step, behavior: "smooth" })
+  }
+
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current
+    if (!track) return
+    isDraggingRef.current = true
+    startXRef.current = event.clientX
+    startScrollLeftRef.current = track.scrollLeft
+    setPaused(true)
+    track.setPointerCapture(event.pointerId)
+  }
+
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current
+    if (!track || !isDraggingRef.current) return
+    event.preventDefault()
+    track.scrollLeft = startScrollLeftRef.current - (event.clientX - startXRef.current)
+  }
+
+  const stopDragging = () => {
+    isDraggingRef.current = false
   }
 
   useEffect(() => {
@@ -798,35 +830,41 @@ function CustomerReviewsCarousel() {
     >
       <div
         ref={trackRef}
-        className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2"
+        className="flex cursor-grab gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-1 active:cursor-grabbing [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         aria-label="Carrousel d'avis clients AMC Auto Moto"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={stopDragging}
+        onPointerCancel={stopDragging}
       >
         {CLIENT_REVIEWS.map((review) => (
           <article
             key={review.text}
             data-review-card
             tabIndex={0}
-            className="snap-start shrink-0 w-[86%] sm:w-[calc((100%_-_1rem)/2)] lg:w-[calc((100%_-_2rem)/3)] xl:w-[calc((100%_-_3rem)/4)] min-h-56 border border-white/10 bg-[#111111] p-5 flex flex-col justify-between focus:outline-none focus:border-[#c8102e]/70"
+            className="snap-start shrink-0 w-[86%] sm:w-80 lg:w-[21rem] xl:w-[22rem] min-h-64 border border-white/10 bg-[#111111] p-6 flex flex-col justify-between focus:outline-none focus:border-[#c8102e]/70"
           >
             <div>
-              <div className="flex items-center justify-between gap-3 mb-5">
-                <div className="flex items-center gap-0.5 text-[#c8102e]" role="img" aria-label="Avis 5 sur 5">
-                  {[0, 1, 2, 3, 4].map((star) => (
-                    <Star key={star} size={15} fill="currentColor" strokeWidth={1.5} />
-                  ))}
-                </div>
-                <span className="text-white/30 text-[9px] font-bold tracking-[0.18em] uppercase">Avis verifie</span>
+              <div className="mb-6 flex items-center gap-0.5 text-[#c8102e]" role="img" aria-label="Avis 5 sur 5">
+                {[0, 1, 2, 3, 4].map((star) => (
+                  <Star key={star} size={17} fill="currentColor" strokeWidth={1.5} />
+                ))}
               </div>
               <p className="text-white/72 text-base leading-relaxed">"{review.text}"</p>
             </div>
-            <p className="mt-6 text-white/38 text-xs font-bold tracking-[0.16em] uppercase">{review.author}</p>
+            <div className="mt-7 flex flex-col gap-3">
+              <p className="text-white text-sm font-bold tracking-[0.08em] uppercase">{review.author}</p>
+              <span className="self-start border border-white/10 px-2.5 py-1 text-white/35 text-[9px] font-bold tracking-[0.16em] uppercase">
+                Avis vérifié
+              </span>
+            </div>
           </article>
         ))}
       </div>
 
-      <div className="mt-5 flex items-center justify-between gap-3">
+      <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <p className="text-white/35 text-xs leading-relaxed">
-          AMC Auto Moto est note 4,9/5 sur 518 avis clients verifies AlloGarage.
+          AMC Auto Moto est noté 4,9/5 sur 518 avis clients vérifiés AlloGarage.
         </p>
         <div className="flex items-center gap-2 shrink-0">
           <button
@@ -1071,10 +1109,9 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
                 </p>
               </div>
             </div>
-
-            <div className="relative mt-8">
-              <CustomerReviewsCarousel />
-            </div>
+          </motion.div>
+          <motion.div variants={fadeUp} className="lg:col-span-2 border border-white/12 bg-[#0c0c0c] p-5 md:p-7 overflow-hidden">
+            <CustomerReviewsCarousel />
           </motion.div>
         </motion.div>
       </section>
