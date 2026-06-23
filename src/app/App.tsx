@@ -37,6 +37,34 @@ const pathToPage = (path: string): Page => {
   return "accueil"
 }
 
+const SITE_URL = "https://www.amcautomoto.com"
+const SEO_BY_PAGE: Record<Page, { title: string; description: string }> = {
+  accueil: {
+    title: "AMC Auto Moto | Garage auto et moto a Marbache",
+    description: "Garage independant a Marbache pour entretien, reparation, diagnostic, pneus, climatisation, revision auto et moto.",
+  },
+  services: {
+    title: "Services auto et moto | AMC Auto Moto Marbache",
+    description: "Revision, vidange, pneus, diagnostic, climatisation, mecanique generale et entretien moto chez AMC Auto Moto a Marbache.",
+  },
+  galerie: {
+    title: "Offres et promotions | AMC Auto Moto Marbache",
+    description: "Consultez les offres en cours du garage AMC Auto Moto a Marbache pour l'entretien et la reparation auto et moto.",
+  },
+  apropos: {
+    title: "A propos du garage | AMC Auto Moto Marbache",
+    description: "Decouvrez AMC Auto Moto, garage independant local a Marbache, reconnu pour son expertise auto et moto.",
+  },
+  contact: {
+    title: "Contact garage auto moto a Marbache | AMC Auto Moto",
+    description: "Contactez AMC Auto Moto a Marbache : telephone, adresse, horaires, itineraire et informations pratiques.",
+  },
+  admin: {
+    title: "Administration | AMC Auto Moto",
+    description: "Espace reserve a l'equipe AMC Auto Moto.",
+  },
+}
+
 interface Offer {
   id: string
   title: string
@@ -1980,6 +2008,26 @@ export default function App() {
     window.addEventListener("popstate", handlePopState)
     return () => window.removeEventListener("popstate", handlePopState)
   }, [])
+
+  useEffect(() => {
+    const seo = SEO_BY_PAGE[page]
+    const canonicalUrl = `${SITE_URL}${PAGE_PATHS[page]}`
+
+    document.title = seo.title
+
+    const setMeta = (selector: string, attr: "content" | "href", value: string) => {
+      const element = document.head.querySelector(selector)
+      if (element) element.setAttribute(attr, value)
+    }
+
+    setMeta('meta[name="description"]', "content", seo.description)
+    setMeta('meta[property="og:title"]', "content", seo.title)
+    setMeta('meta[property="og:description"]', "content", seo.description)
+    setMeta('meta[property="og:url"]', "content", canonicalUrl)
+    setMeta('meta[name="twitter:title"]', "content", seo.title)
+    setMeta('meta[name="twitter:description"]', "content", seo.description)
+    setMeta('link[rel="canonical"]', "href", canonicalUrl)
+  }, [page])
 
   const navigate = (p: Page) => {
     setPage(p)

@@ -9,6 +9,6 @@
     { "source": "/offre-en-cours", "destination": "/offres", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/((?!api|assets|icons|site.webmanifest|favicon.ico).*)", "destination": "/index.html" }
+    { "source": "/((?!api|assets|icons|site.webmanifest|robots.txt|sitemap.xml|favicon.ico).*)", "destination": "/index.html" }
   ]
 }
