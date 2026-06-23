@@ -638,6 +638,27 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
                 </p>
               </div>
             </div>
+
+            <div className="relative mt-8 grid grid-cols-1 md:grid-cols-2 gap-3">
+              {[
+                "Tres professionnel et competent, je recommande.",
+                "Garage tres competent, a l'ecoute de la clientele, tarifs tres corrects.",
+                "Garagiste au top, reactif. Prix correct. Je ne changerai jamais.",
+                "Travail rapide, delais respectes, et tres bon tarif.",
+              ].map((review) => (
+                <div key={review} className="border border-white/10 bg-[#111111] p-4">
+                  <div className="flex items-center justify-between gap-3 mb-3">
+                    <div className="flex items-center gap-0.5 text-[#c8102e]" aria-label="Avis 5 sur 5">
+                      {[0, 1, 2, 3, 4].map((star) => (
+                        <Star key={star} size={13} fill="currentColor" strokeWidth={1.5} />
+                      ))}
+                    </div>
+                    <span className="text-white/30 text-[9px] font-bold tracking-[0.18em] uppercase">Verifie AFNOR</span>
+                  </div>
+                  <p className="text-white/65 text-sm leading-relaxed">"{review}"</p>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </section>
