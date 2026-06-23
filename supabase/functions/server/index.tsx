@@ -52,7 +52,11 @@ app.get("/make-server-be42ff6e/history", async (c) => {
 app.get("/make-server-be42ff6e/offers", async (c) => {
   try {
     const offers = await kv.getByPrefix("offer:");
-    offers.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    offers.sort((a: any, b: any) => {
+      const priorityDiff = (b.priority || 0) - (a.priority || 0);
+      if (priorityDiff !== 0) return priorityDiff;
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
     return c.json(offers);
   } catch (error) {
     console.log("Error fetching offers:", error);
@@ -68,11 +72,12 @@ app.post("/make-server-be42ff6e/offers", async (c) => {
       id: crypto.randomUUID(),
       title: body.title,
       description: body.description,
-      badge: body.badge || "",
-      imageUrl: body.imageUrl || "",
-      validUntil: body.validUntil || "",
-      createdAt: new Date().toISOString(),
-    };
+        badge: body.badge || "",
+        imageUrl: body.imageUrl || "",
+        validUntil: body.validUntil || "",
+        priority: Number(body.priority) || 0,
+        createdAt: new Date().toISOString(),
+      };
     await kv.set(`offer:${offer.id}`, offer);
     await addHistory(actor, "Création", "Offre", offer.title);
     return c.json(offer, 201);

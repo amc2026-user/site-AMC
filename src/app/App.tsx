@@ -121,6 +121,7 @@ interface Offer {
   badge: string
   imageUrl: string
   validUntil: string
+  priority?: number
   createdAt?: string
 }
 
@@ -1577,6 +1578,11 @@ function ServicesPage({ navigate, settings }: { navigate: (p: Page) => void; set
 // --- Galerie Page -------------------------------------------------------------
 function GaleriePage({ offers, settings }: { offers: Offer[]; settings: SiteSettings }) {
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null)
+  const sortedOffers = [...offers].sort((a, b) => {
+    const priorityDiff = (b.priority || 0) - (a.priority || 0)
+    if (priorityDiff !== 0) return priorityDiff
+    return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
+  })
 
   useEffect(() => {
     if (!selectedOffer) return
@@ -1627,7 +1633,7 @@ function GaleriePage({ offers, settings }: { offers: Offer[]; settings: SiteSett
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/8">
-            {offers.map((offer) => (
+            {sortedOffers.map((offer) => (
               <button
                 key={offer.id}
                 type="button"
@@ -1740,7 +1746,7 @@ function AdminPage({ offers, setOffers, settings, setSettings, navigate }: {
 
   // Offers state
   const [editing, setEditing]   = useState<Offer | null>(null)
-  const [offerForm, setOfferForm] = useState({ title: "", description: "", badge: "", imageUrl: "", validUntil: "" })
+  const [offerForm, setOfferForm] = useState({ title: "", description: "", badge: "", imageUrl: "", validUntil: "", priority: 0 })
   const [showForm, setShowForm] = useState(false)
   const [saving, setSaving]     = useState(false)
   const [deleting, setDeleting] = useState<string | null>(null)
@@ -1816,8 +1822,8 @@ function AdminPage({ offers, setOffers, settings, setSettings, navigate }: {
   }
 
   // -- Offers handlers --
-  const openNew = () => { setEditing(null); setOfferForm({ title: "", description: "", badge: "", imageUrl: "", validUntil: "" }); setShowForm(true) }
-  const openEdit = (o: Offer) => { setEditing(o); setOfferForm({ title: o.title, description: o.description, badge: o.badge, imageUrl: o.imageUrl, validUntil: o.validUntil }); setShowForm(true) }
+  const openNew = () => { setEditing(null); setOfferForm({ title: "", description: "", badge: "", imageUrl: "", validUntil: "", priority: 0 }); setShowForm(true) }
+  const openEdit = (o: Offer) => { setEditing(o); setOfferForm({ title: o.title, description: o.description, badge: o.badge, imageUrl: o.imageUrl, validUntil: o.validUntil, priority: o.priority || 0 }); setShowForm(true) }
 
   const handleSaveOffer = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -1978,10 +1984,12 @@ function AdminPage({ offers, setOffers, settings, setSettings, navigate }: {
                 <form onSubmit={handleSaveOffer} className="p-7 space-y-5">
                   <div><label className={lbl}>Titre *</label><input required value={offerForm.title} onChange={e => setOfferForm(p => ({ ...p, title: e.target.value }))} className={inp} placeholder="Ex : Vidange à prix réduit" /></div>
                   <div><label className={lbl}>Description *</label><textarea required rows={3} value={offerForm.description} onChange={e => setOfferForm(p => ({ ...p, description: e.target.value }))} className={`${inp} resize-none`} placeholder="Décrivez l'offre..." /></div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div><label className={lbl}>Étiquette</label><input value={offerForm.badge} onChange={e => setOfferForm(p => ({ ...p, badge: e.target.value }))} className={inp} placeholder="Promo, Nouveau…" /></div>
                     <div><label className={lbl}>Valable jusqu'au</label><input type="date" value={offerForm.validUntil} onChange={e => setOfferForm(p => ({ ...p, validUntil: e.target.value }))} className={inp} /></div>
+                    <div><label className={lbl}>Priorité</label><input type="number" min="0" max="99" value={offerForm.priority} onChange={e => setOfferForm(p => ({ ...p, priority: Number(e.target.value) || 0 }))} className={inp} placeholder="0" /></div>
                   </div>
+                  <p className="text-white/25 text-[11px] -mt-2">Plus le chiffre est élevé, plus l'annonce apparaît à gauche. Exemple : 10 pour une annonce récente/importante.</p>
                   <div>
                     <label className={lbl}>Image (lien URL)</label>
                     <input type="url" value={offerForm.imageUrl} onChange={e => setOfferForm(p => ({ ...p, imageUrl: e.target.value }))} className={inp} placeholder="https://..." />
@@ -1989,7 +1997,7 @@ function AdminPage({ offers, setOffers, settings, setSettings, navigate }: {
                   </div>
                   <div className="flex gap-3 pt-2">
                     <button type="submit" disabled={saving} className="flex-1 bg-[#c8102e] text-white py-3.5 font-bold tracking-[0.15em] uppercase text-xs disabled:opacity-60">
-                      {saving ? "Enregistrement…" : editing ? "Enregistrer" : "Publier l'offre"}
+                      {saving ? "Enregistrement…" : editing ? "Enregistrer" : "Publier l'annonce"}
                     </button>
                     <button type="button" onClick={() => setShowForm(false)} className="px-6 border border-white/15 text-white/50 text-xs hover:text-white">Annuler</button>
                   </div>
@@ -2012,6 +2020,7 @@ function AdminPage({ offers, setOffers, settings, setSettings, navigate }: {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
                       {offer.badge && <span className="bg-[#c8102e] text-white text-[10px] font-bold tracking-widest uppercase px-2 py-0.5">{offer.badge}</span>}
+                      {(offer.priority || 0) > 0 && <span className="border border-[#c8102e]/45 text-[#c8102e] text-[10px] font-bold tracking-widest uppercase px-2 py-0.5">Priorité {offer.priority}</span>}
                       <h4 className="font-heading text-lg text-white font-bold">{offer.title}</h4>
                     </div>
                     <p className="text-white/40 text-sm line-clamp-2">{offer.description}</p>
