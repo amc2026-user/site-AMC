@@ -49,6 +49,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.amcautomoto.com/garage-liverdun</loc>
+    <lastmod>2026-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.amcautomoto.com/garage-custines</loc>
+    <lastmod>2026-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.amcautomoto.com/garage-blenod-les-pont-a-mousson</loc>
     <lastmod>2026-06-23</lastmod>
     <changefreq>monthly</changefreq>

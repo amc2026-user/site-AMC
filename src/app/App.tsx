@@ -16,7 +16,7 @@ import articleEthanolImg from "@/imports/journal disans que le garage MAC Auto M
 import articleSolidarityImg from "@/imports/journal disant ungeste solidaire pour le festival des colporteur d'histoire.avif"
 import { projectId, publicAnonKey } from "/utils/supabase/info"
 
-type Page = "accueil" | "services" | "galerie" | "apropos" | "contact" | "admin" | "localPont" | "localPompey" | "localFrouard" | "localBlenod" | "localDieulouard" | "localNancy"
+type Page = "accueil" | "services" | "galerie" | "apropos" | "contact" | "admin" | "localPont" | "localPompey" | "localFrouard" | "localLiverdun" | "localCustines" | "localBlenod" | "localDieulouard" | "localNancy"
 
 const PAGE_PATHS: Record<Page, string> = {
   accueil: "/",
@@ -28,6 +28,8 @@ const PAGE_PATHS: Record<Page, string> = {
   localPont: "/garage-pont-a-mousson",
   localPompey: "/garage-pompey",
   localFrouard: "/garage-frouard",
+  localLiverdun: "/garage-liverdun",
+  localCustines: "/garage-custines",
   localBlenod: "/garage-blenod-les-pont-a-mousson",
   localDieulouard: "/garage-dieulouard",
   localNancy: "/garage-nancy",
@@ -43,6 +45,8 @@ const pathToPage = (path: string): Page => {
   if (cleanPath === "/garage-pont-a-mousson") return "localPont"
   if (cleanPath === "/garage-pompey") return "localPompey"
   if (cleanPath === "/garage-frouard") return "localFrouard"
+  if (cleanPath === "/garage-liverdun") return "localLiverdun"
+  if (cleanPath === "/garage-custines") return "localCustines"
   if (cleanPath === "/garage-blenod-les-pont-a-mousson") return "localBlenod"
   if (cleanPath === "/garage-dieulouard") return "localDieulouard"
   if (cleanPath === "/garage-nancy") return "localNancy"
@@ -86,6 +90,14 @@ const SEO_BY_PAGE: Record<Page, { title: string; description: string }> = {
   localFrouard: {
     title: "Garage auto moto pres de Frouard | AMC Auto Moto Marbache",
     description: "AMC Auto Moto vous accueille a Marbache, pres de Frouard, pour entretien automobile, reparation moto, pneus, diagnostic et climatisation.",
+  },
+  localLiverdun: {
+    title: "Garage auto moto pres de Liverdun | AMC Auto Moto Marbache",
+    description: "Garage auto moto a Marbache proche de Liverdun pour entretien voiture, revision, pneus, freinage, diagnostic, climatisation et entretien moto.",
+  },
+  localCustines: {
+    title: "Garage auto moto proche de Custines | AMC Auto Moto Marbache",
+    description: "AMC Auto Moto, garage independant a Marbache proche de Custines pour reparation auto, revision, pneus, diagnostic et entretien moto.",
   },
   localBlenod: {
     title: "Garage pres de Blenod-les-Pont-a-Mousson | AMC Auto Moto",
@@ -246,6 +258,15 @@ const NAV: { label: string; page: Page }[] = [
   { label: "Contact",  page: "contact" },
 ]
 
+const LOCAL_NAV: { label: string; page: LocalPage }[] = [
+  { label: "Pont-a-Mousson", page: "localPont" },
+  { label: "Pompey", page: "localPompey" },
+  { label: "Frouard", page: "localFrouard" },
+  { label: "Liverdun", page: "localLiverdun" },
+  { label: "Custines", page: "localCustines" },
+  { label: "Dieulouard", page: "localDieulouard" },
+]
+
 const SERVICES = [
   {
     icon: Settings,
@@ -329,12 +350,17 @@ const PRESS_CLIPPINGS = [
   { src: serviceIciImg, title: "Carrosserie, pare-brise, climatisation", source: "Services complémentaires" },
 ]
 
-const LOCAL_SEO_PAGES: Record<Exclude<Page, "accueil" | "services" | "galerie" | "apropos" | "contact" | "admin">, {
+type LocalPage = Exclude<Page, "accueil" | "services" | "galerie" | "apropos" | "contact" | "admin">
+
+const LOCAL_SEO_PAGES: Record<LocalPage, {
   city: string
   title: string
   intro: string
   h1: string
   travel: string
+  keywords: string[]
+  paragraphs: string[]
+  faqs: { question: string; answer: string }[]
 }> = {
   localPont: {
     city: "Pont-a-Mousson",
@@ -342,6 +368,23 @@ const LOCAL_SEO_PAGES: Record<Exclude<Page, "accueil" | "services" | "galerie" |
     h1: "Garage auto moto a Marbache pres de Pont-a-Mousson",
     intro: "Vous cherchez un garage proche de Pont-a-Mousson sans passer par une grande enseigne impersonnelle ? AMC Auto Moto vous accueille a Marbache pour l'entretien, la reparation et le diagnostic de votre vehicule.",
     travel: "Depuis Pont-a-Mousson, le garage est facilement accessible pour une revision, un montage de pneus, une intervention mecanique ou une recharge de climatisation.",
+    keywords: ["garage Pont-a-Mousson", "entretien voiture Pont-a-Mousson", "revision automobile Pont-a-Mousson", "garage moto Pont-a-Mousson"],
+    paragraphs: [
+      "AMC Auto Moto est installe a Marbache, a quelques minutes du secteur de Pont-a-Mousson. La page ne presente pas une fausse adresse : l'atelier reste bien situe au 5 Chemin de Saizerelle, 54820 Marbache. Elle aide simplement les automobilistes et motards mussipontains a trouver un garage independant proche, capable de suivre un vehicule dans la duree avec un contact direct, des conseils simples et une relation de confiance.",
+      "Pour une revision automobile pres de Pont-a-Mousson, l'objectif est de controler les points essentiels avant que les problemes ne deviennent couteux : vidange, filtres, niveaux, freinage, pneus, eclairage, batterie, diagnostic electronique et elements d'usure. AMC Auto Moto peut orienter le client selon l'age du vehicule, son kilometrage, son usage quotidien et les signes constates au volant.",
+      "Les conducteurs qui font beaucoup de trajets entre Pont-a-Mousson, Marbache, Dieulouard, Pompey ou Nancy ont souvent besoin d'un atelier reactif pour l'entretien courant. Un bruit au freinage, un voyant moteur, une climatisation qui refroidit moins, une vibration ou une usure irreguliere des pneus meritent un controle rapide. Le garage propose une approche concrete : comprendre le symptome, verifier le vehicule, expliquer l'intervention et annoncer clairement les priorites.",
+      "AMC Auto Moto prend aussi en charge l'entretien moto pres de Pont-a-Mousson : vidange, pneus, freinage, kit chaine, elements de securite et mecanique selon besoin. Pour les motards, la preparation avant saison ou avant un long trajet est importante, car un pneu fatigue, un freinage approximatif ou une transmission mal suivie se ressentent immediatement sur route.",
+      "La proximite avec Pont-a-Mousson est utile pour les clients qui veulent eviter les allers-retours trop longs. L'atelier de Marbache reste accessible pour deposer un vehicule, demander un devis ou planifier une intervention. Les pages locales du site ont une vocation pratique : aider a comprendre les services disponibles et rappeler que l'adresse reelle est a Marbache, pas dans la ville recherchee.",
+      "Pour les pneus autour de Pont-a-Mousson, AMC Auto Moto peut accompagner le choix de dimensions, le montage, la verification de l'usure et le controle de pression. Un train de pneus adapte change le comportement du vehicule, surtout sous la pluie, sur autoroute ou lors des trajets quotidiens dans le Val de Lorraine.",
+      "Le diagnostic electronique est egalement important. Un voyant ne donne pas toujours la cause exacte ; il indique une piste. Le role du garage est de lire les codes defauts, de controler les organes concernes et d'eviter les remplacements inutiles. Cette methode protege le budget du client tout en fiabilisant la reparation.",
+      "Pour une recherche comme garage Pont-a-Mousson, entretien voiture Pont-a-Mousson ou garage moto Pont-a-Mousson, AMC Auto Moto souhaite etre visible de facon honnete : un garage a Marbache, proche du secteur, avec des services utiles pour les habitants de Pont-a-Mousson et des communes voisines.",
+    ],
+    faqs: [
+      { question: "AMC Auto Moto est-il situe a Pont-a-Mousson ?", answer: "Non. Le garage est situe a Marbache, au 5 Chemin de Saizerelle. Il est proche de Pont-a-Mousson et accessible pour les clients du secteur." },
+      { question: "Puis-je faire une revision automobile pres de Pont-a-Mousson ?", answer: "Oui. AMC Auto Moto propose revision, vidange, filtres, controles, pneus, freinage, diagnostic et climatisation a Marbache, pres de Pont-a-Mousson." },
+      { question: "Le garage entretient-il les motos venant de Pont-a-Mousson ?", answer: "Oui. L'atelier intervient sur l'entretien moto : vidange, pneus, freins, kit chaine et controles selon le besoin du vehicule." },
+      { question: "Faut-il appeler avant de venir depuis Pont-a-Mousson ?", answer: "C'est recommande pour organiser le planning, verifier les disponibilites et preparer les informations utiles du vehicule." },
+    ],
   },
   localPompey: {
     city: "Pompey",
@@ -349,6 +392,23 @@ const LOCAL_SEO_PAGES: Record<Exclude<Page, "accueil" | "services" | "galerie" |
     h1: "Garage auto moto proche de Pompey, a Marbache",
     intro: "AMC Auto Moto est situe a Marbache, a proximite de Pompey, et accompagne les conducteurs qui veulent un garage local, clair sur les devis et attentif au suivi du vehicule.",
     travel: "Pour les automobilistes et motards autour de Pompey, l'atelier propose entretien courant, diagnostic, pneus, freinage, climatisation et mecanique generale.",
+    keywords: ["garage Pompey", "changement pneus Pompey", "garage auto proche de Pompey", "entretien voiture Pompey"],
+    paragraphs: [
+      "AMC Auto Moto se trouve a Marbache et peut etre une solution pratique pour les conducteurs de Pompey qui recherchent un garage auto moto proche, independant et facile a contacter. Le site indique volontairement l'adresse reelle du garage afin d'eviter toute confusion : l'atelier n'est pas installe a Pompey, mais il reste accessible depuis le Bassin de Pompey pour les besoins d'entretien et de reparation.",
+      "Les recherches de type garage Pompey ou changement pneus Pompey correspondent souvent a des besoins rapides : pneu use, crevaison, revision a prevoir, voyant moteur, bruit au freinage ou climatisation moins efficace. AMC Auto Moto traite ces demandes avec une logique simple : ecouter le symptome, regarder le vehicule, donner une explication claire et proposer une intervention adaptee.",
+      "Pour les pneus proches de Pompey, le garage peut aider a verifier les dimensions, controler l'usure, conseiller le remplacement et organiser le montage. Les pneus sont un point de securite essentiel pour les trajets quotidiens entre Pompey, Frouard, Marbache, Nancy ou Pont-a-Mousson. Un pneu trop use ou mal adapte allonge les distances de freinage et degrade la tenue de route.",
+      "L'entretien courant reste le meilleur moyen de limiter les pannes. Vidange, filtres, niveaux, freinage, batterie, eclairage et controle visuel permettent de detecter les signes faibles. Pour un vehicule utilise tous les jours autour de Pompey, un suivi regulier aide a conserver une conduite fiable et a anticiper les frais.",
+      "AMC Auto Moto intervient aussi sur le diagnostic electronique. Quand un voyant s'allume, la lecture des defauts doit etre accompagnee d'un controle reel. Un code peut provenir d'un capteur, d'un faisceau, d'une piece fatiguee ou d'un probleme plus large. L'objectif est d'eviter les remplacements au hasard et de rendre la reparation comprehensible.",
+      "La climatisation est une autre demande forte avant les vacances et pendant les periodes chaudes. Un systeme qui souffle tiede, une mauvaise odeur ou un degivrage moins efficace meritent un bilan. Pour les clients de Pompey, anticiper ce type d'intervention permet d'eviter le rush saisonnier.",
+      "L'atelier prend egalement en charge l'entretien moto : pneus, vidange, freinage, kit chaine, controles de securite et mecanique selon le vehicule. Les motards du secteur de Pompey peuvent ainsi regrouper plusieurs besoins auto et moto dans un meme garage a Marbache.",
+      "Cette page vise donc une visibilite locale propre : garage auto moto proche de Pompey, mais adresse officielle a Marbache. Elle renforce le lien entre la ville recherchee, les services reels du garage et les informations pratiques utiles pour prendre rendez-vous.",
+    ],
+    faqs: [
+      { question: "AMC Auto Moto est-il un garage a Pompey ?", answer: "Non. Le garage est a Marbache, proche de Pompey. La page aide les clients de Pompey a trouver un atelier accessible dans le secteur." },
+      { question: "Le garage fait-il le changement de pneus pres de Pompey ?", answer: "Oui. AMC Auto Moto propose montage, controle d'usure et conseil pneus pour les automobilistes et motards proches de Pompey." },
+      { question: "Puis-je faire diagnostiquer un voyant moteur en venant de Pompey ?", answer: "Oui. Le garage effectue le diagnostic electronique et les controles necessaires pour identifier la cause du probleme." },
+      { question: "Est-ce utile de prevoir la climatisation avant les vacances ?", answer: "Oui. Les demandes de climatisation augmentent fortement avant l'ete ; anticiper permet d'obtenir un creneau plus facilement." },
+    ],
   },
   localFrouard: {
     city: "Frouard",
@@ -356,6 +416,71 @@ const LOCAL_SEO_PAGES: Record<Exclude<Page, "accueil" | "services" | "galerie" |
     h1: "Garage auto moto pres de Frouard, installe a Marbache",
     intro: "Pour une reparation auto ou moto pres de Frouard, AMC Auto Moto vous recoit dans son atelier de Marbache avec une approche simple : diagnostic clair, conseils utiles et tarifs transparents.",
     travel: "Le garage reste a Marbache, mais il est pratique pour les clients venant de Frouard et des communes du Bassin de Pompey.",
+    keywords: ["garage Frouard", "garage auto pres de Frouard", "reparation voiture Frouard", "entretien moto Frouard"],
+    paragraphs: [
+      "Les habitants de Frouard recherchent souvent un garage capable d'intervenir rapidement sans perdre la qualite du conseil. AMC Auto Moto est situe a Marbache, pas a Frouard, mais l'atelier reste proche pour les automobilistes et motards du secteur. Cette proximite permet de planifier une revision, un montage de pneus, un diagnostic ou une reparation sans s'eloigner inutilement.",
+      "Un garage auto pres de Frouard doit pouvoir prendre en compte des usages varies : petits trajets quotidiens, route vers Nancy, deplacements professionnels, depart en vacances, vehicule familial ou moto de loisir. Les besoins ne sont pas les memes selon le kilometrage, l'age du vehicule et les symptomes ressentis. AMC Auto Moto adapte ses controles a cette realite.",
+      "L'entretien courant comprend la vidange, les filtres, les niveaux, le controle du freinage, les pneus, l'eclairage, la batterie et les elements de securite. Un suivi regulier evite souvent les immobilisations longues. Pour les clients de Frouard, faire controler le vehicule avant un long trajet ou avant le controle technique peut eviter de mauvaises surprises.",
+      "Le diagnostic electronique fait partie des demandes frequentes. Un voyant moteur, ABS, airbag ou antipollution ne doit pas etre ignore. Le garage peut lire les defauts, analyser les pistes et verifier les organes concernes. Cette etape permet d'expliquer la situation au client au lieu de simplement annoncer une piece a changer.",
+      "Pour les pneus, les trajets entre Frouard, Pompey, Marbache et Nancy sollicitent fortement les vehicules. Usure irreguliere, pression insuffisante, vibrations ou perte d'adherence doivent etre controles. Le garage peut accompagner le remplacement et rappeler les points de vigilance selon la saison.",
+      "AMC Auto Moto propose aussi la climatisation : bilan, recharge selon gaz compatible, recherche de fuite si necessaire et conseils d'utilisation. Une climatisation entretenue ameliore le confort mais aussi le desembuage et la qualite d'air dans l'habitacle.",
+      "Les motos ne sont pas oubliees. Entretien, pneus, freins, kit chaine et controles de securite peuvent etre anticipes avant la saison. Un motard de Frouard peut ainsi trouver a Marbache un interlocuteur qui comprend les contraintes specifiques d'un deux-roues.",
+      "La page vise a repondre aux recherches garage Frouard ou garage auto pres de Frouard de maniere honnete : AMC Auto Moto est un atelier de Marbache, accessible depuis Frouard, avec des prestations reelles et une adresse clairement affichee.",
+    ],
+    faqs: [
+      { question: "AMC Auto Moto est-il proche de Frouard ?", answer: "Oui. Le garage est situe a Marbache et reste accessible depuis Frouard pour l'entretien et la reparation auto moto." },
+      { question: "Quels services sont utiles avant un controle technique ?", answer: "Un controle des pneus, freins, eclairage, niveaux, trains roulants et voyants peut aider a preparer le vehicule avant le controle technique." },
+      { question: "Le garage s'occupe-t-il des motos venant de Frouard ?", answer: "Oui. AMC Auto Moto prend en charge l'entretien moto, les pneus, le freinage, le kit chaine et les controles selon besoin." },
+      { question: "Puis-je demander un devis avant intervention ?", answer: "Oui. Le garage privilegie une approche claire avec explication de la demande et devis selon le vehicule et l'intervention." },
+    ],
+  },
+  localLiverdun: {
+    city: "Liverdun",
+    title: "Garage auto moto pres de Liverdun",
+    h1: "Garage auto moto a Marbache pres de Liverdun",
+    intro: "AMC Auto Moto accueille a Marbache les conducteurs venant de Liverdun pour l'entretien voiture, la revision, les pneus, la climatisation, le diagnostic et l'entretien moto.",
+    travel: "Depuis Liverdun, l'atelier de Marbache offre une alternative locale pour faire suivre un vehicule sans s'adresser a une structure impersonnelle.",
+    keywords: ["garage Liverdun", "garage auto pres de Liverdun", "revision voiture Liverdun", "garage moto Liverdun"],
+    paragraphs: [
+      "Pour les automobilistes de Liverdun, trouver un garage proche et serieux peut faire gagner du temps dans l'entretien du vehicule. AMC Auto Moto est situe a Marbache, dans le secteur Val de Lorraine, et accueille les clients qui souhaitent un atelier auto moto independant avec une adresse claire et un contact direct.",
+      "La page ne cherche pas a faire croire que le garage se trouve a Liverdun. Elle explique pourquoi AMC Auto Moto peut etre pertinent pour une recherche garage Liverdun : l'atelier est proche, les services sont adaptes aux besoins courants et la prise en charge reste humaine. Cette transparence est importante pour un SEO local durable.",
+      "L'entretien voiture pres de Liverdun concerne souvent des operations regulieres : vidange, filtres, niveaux, controle du freinage, pneus, batterie, eclairage et verification avant long trajet. Un conducteur qui utilise son vehicule chaque jour doit pouvoir anticiper les signes d'usure et eviter une panne bloquante.",
+      "Les revisions permettent de garder un historique clair et de prolonger la fiabilite du vehicule. Selon le kilometrage, l'age, la motorisation et l'usage, les priorites peuvent changer. AMC Auto Moto peut orienter le client sur les operations importantes et celles qui peuvent etre planifiees plus tard.",
+      "Le diagnostic electronique est utile lorsqu'un voyant apparait, lorsque le moteur manque de puissance ou lorsque le comportement du vehicule change. Lire les codes defauts ne suffit pas toujours ; il faut verifier la cause et expliquer les choix techniques. Cette methode evite des remplacements inutiles.",
+      "Les pneus et le freinage sont essentiels pour les trajets autour de Liverdun, Marbache, Frouard ou Nancy. Usure, vibrations, bruit, freinage plus long ou direction moins precise doivent etre controles. Le garage propose un accompagnement concret pour securiser le vehicule.",
+      "AMC Auto Moto intervient aussi sur les motos : vidange, pneus, freinage, kit chaine et controles de securite. Avant une reprise de saison ou une sortie plus longue, un controle moto permet d'eviter les mauvaises surprises et de rouler plus sereinement.",
+      "Cette page renforce donc une presence locale utile : garage auto moto a Marbache pres de Liverdun, avec des services clairs, une carte de l'adresse reelle et des liens vers les pages services et contact.",
+    ],
+    faqs: [
+      { question: "Le garage est-il a Liverdun ?", answer: "Non. AMC Auto Moto est situe a Marbache, mais reste proche de Liverdun pour les conducteurs du secteur." },
+      { question: "Quels entretiens faire avant un long trajet depuis Liverdun ?", answer: "Il est conseille de verifier pneus, freins, niveaux, eclairage, batterie, climatisation et voyants avant un long trajet." },
+      { question: "Le garage peut-il faire une revision voiture pres de Liverdun ?", answer: "Oui. AMC Auto Moto propose revision, vidange, filtres et controles a Marbache, proche de Liverdun." },
+      { question: "Faut-il prendre rendez-vous pour une moto ?", answer: "Oui, c'est preferable afin de reserver un creneau et de preparer les informations du deux-roues." },
+    ],
+  },
+  localCustines: {
+    city: "Custines",
+    title: "Garage auto moto proche de Custines",
+    h1: "Garage auto moto a Marbache proche de Custines",
+    intro: "AMC Auto Moto est un garage independant situe a Marbache, proche de Custines, pour l'entretien automobile, les pneus, le diagnostic, la climatisation et l'entretien moto.",
+    travel: "Depuis Custines, l'atelier est accessible pour une revision, un controle avant depart, une intervention de freinage ou une demande de devis.",
+    keywords: ["garage Custines", "garage auto proche de Custines", "pneus Custines", "entretien voiture Custines"],
+    paragraphs: [
+      "Les clients de Custines qui recherchent un garage proche peuvent se tourner vers AMC Auto Moto a Marbache. Le garage n'est pas installe a Custines : son adresse officielle reste 5 Chemin de Saizerelle, 54820 Marbache. Cette precision permet de construire une visibilite locale propre, sans fausse implantation ni page artificielle.",
+      "Un garage auto proche de Custines doit pouvoir repondre aux besoins du quotidien : revision, vidange, filtres, pneus, freinage, batterie, diagnostic, climatisation et mecanique generale. AMC Auto Moto presente ces services de facon claire pour aider le client a identifier rapidement l'intervention utile.",
+      "Pour les vehicules qui circulent entre Custines, Marbache, Pompey et Nancy, l'entretien preventif est essentiel. Un bruit nouveau, une vibration, une perte de puissance, un voyant ou une climatisation moins efficace ne doivent pas etre ignores. Plus le diagnostic est fait tot, plus la reparation peut etre maitrisee.",
+      "Les pneus font partie des demandes frequentes autour de Custines. Le garage peut accompagner le controle d'usure, la verification des dimensions et le montage. Un pneu adapte a la saison et au vehicule ameliore la securite, le confort et la consommation.",
+      "La revision automobile permet de conserver un vehicule fiable. AMC Auto Moto peut examiner les elements habituels, expliquer les priorites et proposer un devis selon l'etat du vehicule. Cette approche evite de transformer chaque visite en liste d'interventions floue.",
+      "Le diagnostic electronique est particulierement utile pour les vehicules modernes. Les calculateurs donnent des informations, mais l'experience atelier reste necessaire pour comprendre ce qui se passe vraiment. Le garage cherche a confirmer la cause avant de proposer une reparation.",
+      "AMC Auto Moto prend aussi en charge les motos proches de Custines : entretien, freins, pneus, transmission et controles de securite. Un suivi regulier aide a garder un deux-roues agreable et sur, notamment avant les beaux jours.",
+      "Cette page cible donc les recherches garage Custines et garage auto proche de Custines tout en restant fidele a la realite : un atelier situe a Marbache, proche de la commune et accessible pour les automobilistes et motards du secteur.",
+    ],
+    faqs: [
+      { question: "AMC Auto Moto est-il situe a Custines ?", answer: "Non. Le garage est situe a Marbache, proche de Custines, avec l'adresse reelle indiquee sur le site." },
+      { question: "Le garage fait-il les pneus pour les clients de Custines ?", answer: "Oui. AMC Auto Moto propose controle, conseil et montage de pneus auto et moto selon les besoins." },
+      { question: "Puis-je venir pour un diagnostic electronique ?", answer: "Oui. Le garage peut lire les defauts et effectuer les controles necessaires pour comprendre l'origine du probleme." },
+      { question: "Comment contacter le garage depuis Custines ?", answer: "Le plus simple est d'appeler le garage ou de consulter la page contact pour l'itineraire vers Marbache." },
+    ],
   },
   localBlenod: {
     city: "Blenod-les-Pont-a-Mousson",
@@ -363,6 +488,23 @@ const LOCAL_SEO_PAGES: Record<Exclude<Page, "accueil" | "services" | "galerie" |
     h1: "Garage a Marbache accessible depuis Blenod-les-Pont-a-Mousson",
     intro: "AMC Auto Moto accueille les conducteurs venant de Blenod-les-Pont-a-Mousson pour l'entretien auto, l'entretien moto, les pneus, le diagnostic et les interventions mecaniques.",
     travel: "L'adresse reste bien a Marbache : un atelier local pour les clients du secteur Pont-a-Mousson, Marbache et Val de Lorraine.",
+    keywords: ["garage Blenod-les-Pont-a-Mousson", "garage proche Blenod", "entretien auto Blenod", "garage moto Blenod"],
+    paragraphs: [
+      "AMC Auto Moto est situe a Marbache et accompagne les clients venant de Blenod-les-Pont-a-Mousson pour l'entretien et la reparation auto moto. La page precise l'adresse reelle du garage afin de rester conforme a une demarche locale propre : l'atelier n'est pas dans la commune, mais il est accessible depuis le secteur de Pont-a-Mousson.",
+      "Les besoins des conducteurs autour de Blenod-les-Pont-a-Mousson sont souvent proches : revision, vidange, pneus, freinage, diagnostic, climatisation, batterie et controle avant de longs trajets. AMC Auto Moto peut aider a planifier ces operations selon le kilometrage et les signes constates.",
+      "Un garage independant apporte une relation plus directe. Le client peut expliquer le symptome, poser ses questions et comprendre ce qui est prioritaire. Cette clarte est importante quand il faut arbitrer entre une intervention urgente, une piece d'usure a surveiller et un entretien a programmer.",
+      "Pour les pneus, le garage peut controler l'usure, conseiller le remplacement et effectuer le montage selon les dimensions du vehicule. Les trajets quotidiens dans le Val de Lorraine rendent la securite des pneus essentielle, surtout par temps humide.",
+      "Le diagnostic electronique permet d'avancer methodiquement lorsqu'un voyant apparait. AMC Auto Moto ne se limite pas a une lecture rapide ; l'objectif est d'identifier la cause probable et d'expliquer la suite au client.",
+      "L'entretien moto est egalement propose pour les clients venant de Blenod-les-Pont-a-Mousson : vidange, pneus, freinage, kit chaine et controles de securite. Une moto bien entretenue est plus agreable, plus fiable et plus sure.",
+      "La climatisation doit etre anticipee avant les periodes de forte demande. Un systeme moins froid ou une mauvaise odeur peut indiquer un besoin de controle, de recharge ou de nettoyage. Prendre rendez-vous en amont evite souvent les delais de derniere minute.",
+      "Cette page s'inscrit dans un cocon local autour de Marbache, Pont-a-Mousson, Dieulouard, Pompey, Frouard, Liverdun et Custines, avec un maillage vers les services, le contact et les autres communes proches.",
+    ],
+    faqs: [
+      { question: "AMC Auto Moto est-il proche de Blenod-les-Pont-a-Mousson ?", answer: "Oui. Le garage est a Marbache, accessible depuis Blenod-les-Pont-a-Mousson et les communes autour de Pont-a-Mousson." },
+      { question: "Quels services sont proposes pour les voitures ?", answer: "Revision, vidange, pneus, freinage, diagnostic, climatisation, batterie et mecanique generale selon le besoin." },
+      { question: "Le garage entretient-il aussi les motos ?", answer: "Oui. AMC Auto Moto propose l'entretien moto, les pneus, le freinage et les controles de securite." },
+      { question: "Ou trouver l'itineraire exact ?", answer: "La carte et la page contact indiquent l'adresse reelle du garage a Marbache." },
+    ],
   },
   localDieulouard: {
     city: "Dieulouard",
@@ -370,6 +512,23 @@ const LOCAL_SEO_PAGES: Record<Exclude<Page, "accueil" | "services" | "galerie" |
     h1: "Garage auto moto a Marbache pres de Dieulouard",
     intro: "Si vous cherchez un garage pres de Dieulouard, AMC Auto Moto propose a Marbache des prestations d'entretien, reparation, diagnostic, pneus et climatisation pour autos et motos.",
     travel: "Le garage est accessible depuis Dieulouard pour planifier une revision, une intervention rapide ou un controle avant un trajet.",
+    keywords: ["garage Dieulouard", "garage pres de Dieulouard", "revision voiture Dieulouard", "diagnostic auto Dieulouard"],
+    paragraphs: [
+      "AMC Auto Moto est un garage auto moto situe a Marbache, pres de Dieulouard. La page s'adresse aux conducteurs qui cherchent un atelier proche sans confondre les communes : le garage n'est pas a Dieulouard, mais il est accessible depuis la ville pour l'entretien courant, la revision, les pneus, le diagnostic et la mecanique.",
+      "Pour un conducteur de Dieulouard, l'interet d'un garage proche est simple : pouvoir faire suivre son vehicule sans multiplier les contraintes. Un rendez-vous pour une vidange, un controle de freins, un montage de pneus ou une recharge de climatisation doit etre clair, organise et comprehensible.",
+      "La revision automobile permet de verifier les elements essentiels : huile, filtres, niveaux, pneus, freinage, batterie, eclairage et points de securite. Selon le kilometrage et l'usage, AMC Auto Moto peut expliquer quelles operations sont prioritaires et lesquelles peuvent etre planifiees.",
+      "Le diagnostic electronique aide a traiter les voyants et les comportements anormaux. Un code defaut donne une information, mais il doit etre interprete avec les controles adaptes. Cette methode permet de limiter les reparations inutiles et de mieux comprendre le probleme.",
+      "Les pneus et le freinage sont essentiels pour les trajets entre Dieulouard, Marbache, Pont-a-Mousson et Nancy. Usure, bruit, tremblement ou distance de freinage allongee doivent entrainer un controle. Le garage peut conseiller selon l'etat du vehicule et la saison.",
+      "La climatisation est souvent demandee au dernier moment. Pourtant, un bilan avant l'ete permet de detecter une perte d'efficacite, une fuite ou un besoin d'entretien. Cette anticipation aide a eviter les periodes de forte affluence.",
+      "AMC Auto Moto accompagne aussi les motards de Dieulouard pour l'entretien, les pneus, les freins, le kit chaine et les controles avant saison. La securite d'un deux-roues depend beaucoup d'un entretien regulier et precis.",
+      "Cette page cible les recherches garage Dieulouard et garage pres de Dieulouard en respectant les recommandations locales : contenu utile, adresse reelle a Marbache, services clairement expliques et liens vers contact et services.",
+    ],
+    faqs: [
+      { question: "AMC Auto Moto est-il a Dieulouard ?", answer: "Non. Le garage est situe a Marbache, pres de Dieulouard, avec l'adresse reelle affichee sur le site." },
+      { question: "Puis-je faire une revision en venant de Dieulouard ?", answer: "Oui. Le garage propose revision, vidange, filtres et controles pour les clients du secteur." },
+      { question: "Le diagnostic electronique est-il disponible ?", answer: "Oui. AMC Auto Moto peut lire les codes defauts et verifier les elements concernes." },
+      { question: "Le garage fait-il les pneus moto ?", answer: "Oui. L'atelier propose des prestations pneus et entretien moto selon les besoins du deux-roues." },
+    ],
   },
   localNancy: {
     city: "Nancy",
@@ -377,6 +536,23 @@ const LOCAL_SEO_PAGES: Record<Exclude<Page, "accueil" | "services" | "galerie" |
     h1: "Garage automobile pres de Nancy, a Marbache",
     intro: "AMC Auto Moto n'est pas situe a Nancy : le garage est installe a Marbache, en Meurthe-et-Moselle, et reste une alternative locale pour les conducteurs qui recherchent un atelier independant pres de Nancy.",
     travel: "Revision, diagnostic electronique, pneus, climatisation, freinage et entretien moto : l'atelier accompagne les clients du nord de l'agglomeration nanceienne.",
+    keywords: ["garage automobile pres de Nancy", "garage auto moto Nancy nord", "revision voiture pres de Nancy", "diagnostic auto pres de Nancy"],
+    paragraphs: [
+      "AMC Auto Moto est situe a Marbache, au nord de Nancy, et peut interesser les conducteurs qui recherchent un garage automobile pres de Nancy sans forcement passer par les grands axes commerciaux. La page reste transparente : l'adresse officielle est a Marbache, pas a Nancy. Cette precision est essentielle pour une visibilite locale durable.",
+      "Les clients du nord de l'agglomeration nanceienne peuvent avoir besoin d'un atelier independant pour une revision, une vidange, un diagnostic, des pneus, du freinage, de la climatisation ou de l'entretien moto. AMC Auto Moto propose une prise en charge claire, avec des informations pratiques et un lien direct vers l'appel ou l'itineraire.",
+      "Pour les vehicules utilises sur route, autoroute ou trajets quotidiens autour de Nancy, l'entretien preventif est important. Une vidange retardee, des pneus fatigues, un freinage bruyant ou un voyant ignore peuvent entrainer des frais plus importants. Le garage aide a prioriser ce qui est urgent.",
+      "Le diagnostic electronique est particulierement utile pour les voitures modernes. Un voyant moteur, antipollution ou ABS demande une lecture et une verification. AMC Auto Moto cherche a comprendre la cause avant de proposer la solution, afin d'eviter les interventions inutiles.",
+      "La climatisation est un service a anticiper avant les vacances et les fortes chaleurs. Les demandes arrivent souvent au meme moment ; planifier un controle plus tot facilite l'organisation et ameliore le confort de conduite.",
+      "Pour les pneus, les trajets autour de Nancy exigent une bonne adherence. Le garage peut verifier l'usure, conseiller le remplacement et effectuer le montage. Le controle des pneus reste un point simple mais essentiel pour la securite.",
+      "AMC Auto Moto intervient aussi sur les motos : entretien, vidange, pneus, freins, transmission et controles de securite. Les motards proches de Nancy peuvent ainsi s'adresser a un atelier auto moto situe a Marbache.",
+      "Cette page repond aux recherches garage automobile pres de Nancy en restant naturelle : elle explique la localisation reelle, les services disponibles et les raisons pour lesquelles un client peut choisir un garage independant a Marbache.",
+    ],
+    faqs: [
+      { question: "AMC Auto Moto est-il a Nancy ?", answer: "Non. AMC Auto Moto est situe a Marbache, en Meurthe-et-Moselle, et peut etre accessible depuis le nord de Nancy." },
+      { question: "Quels services sont utiles avant les vacances ?", answer: "Pneus, freins, niveaux, eclairage, batterie et climatisation sont a verifier avant un long trajet." },
+      { question: "Le garage fait-il le diagnostic electronique ?", answer: "Oui. L'atelier effectue la lecture des defauts et les controles associes pour mieux identifier la panne." },
+      { question: "Puis-je contacter le garage directement ?", answer: "Oui. Le bouton d'appel et la page contact permettent de joindre AMC Auto Moto et de preparer la demande." },
+    ],
   },
 }
 
@@ -505,6 +681,18 @@ function Footer({ navigate, settings }: { navigate: (p: Page) => void; settings:
                   className="text-white/50 text-sm text-left hover:text-white transition-colors"
                 >
                   {label}
+                </button>
+              ))}
+            </div>
+            <p className="text-white/30 text-[10px] tracking-[0.25em] uppercase mt-8 mb-4">Zones desservies</p>
+            <div className="flex flex-col gap-2.5">
+              {LOCAL_NAV.map(({ label, page }) => (
+                <button
+                  key={page}
+                  onClick={() => navigate(page)}
+                  className="text-white/50 text-sm text-left hover:text-white transition-colors"
+                >
+                  Garage proche de {label}
                 </button>
               ))}
             </div>
@@ -1888,38 +2076,83 @@ function LocalSeoPage({ localPage, navigate, settings }: {
 }) {
   const content = LOCAL_SEO_PAGES[localPage]
   const nearbyPages = Object.entries(LOCAL_SEO_PAGES).filter(([key]) => key !== localPage) as [keyof typeof LOCAL_SEO_PAGES, typeof content][]
+  const pageUrl = `${SITE_URL}${PAGE_PATHS[localPage]}`
+  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(`${settings.address} ${settings.postalCode} ${settings.city}`)}&output=embed`
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["LocalBusiness", "AutoRepair"],
+        "@id": `${SITE_URL}/#garage`,
+        name: "AMC Auto Moto",
+        url: pageUrl,
+        image: `${SITE_URL}/icons/icon-512.png`,
+        logo: `${SITE_URL}/icons/icon-512.png`,
+        telephone: "+33954158772",
+        email: settings.email,
+        priceRange: "€€",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: settings.address,
+          postalCode: settings.postalCode,
+          addressLocality: settings.city,
+          addressRegion: "Meurthe-et-Moselle",
+          addressCountry: "FR",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: 48.787695,
+          longitude: 6.122555,
+        },
+        areaServed: [content.city, "Marbache", "Pont-a-Mousson", "Pompey", "Frouard", "Liverdun", "Custines", "Dieulouard", "Meurthe-et-Moselle"],
+        openingHoursSpecification: [
+          { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "12:00" },
+          { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "14:00", closes: "18:00" },
+        ],
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "4.9",
+          reviewCount: "518",
+          bestRating: "5",
+          worstRating: "1",
+        },
+        makesOffer: SERVICES.map(service => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: service.title,
+            areaServed: content.city,
+          },
+        })),
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        mainEntity: content.faqs.map(item => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Accueil", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: content.city, item: pageUrl },
+        ],
+      },
+    ],
+  }
 
   return (
     <div className="pt-16">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "AutoRepair",
-            "@id": `${SITE_URL}/#garage`,
-            name: "AMC Auto Moto",
-            url: `${SITE_URL}${PAGE_PATHS[localPage]}`,
-            telephone: "+33954158772",
-            email: settings.email,
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: settings.address,
-              postalCode: settings.postalCode,
-              addressLocality: settings.city,
-              addressRegion: "Meurthe-et-Moselle",
-              addressCountry: "FR",
-            },
-            areaServed: [content.city, "Marbache", "Meurthe-et-Moselle"],
-            priceRange: "€€",
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: "4.9",
-              reviewCount: "518",
-              bestRating: "5",
-            },
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
       />
 
       <section className="relative overflow-hidden bg-[#0a0a0a] px-6 py-24">
@@ -1929,6 +2162,13 @@ function LocalSeoPage({ localPage, navigate, settings }: {
           <span className="text-[#c8102e] text-[10px] tracking-[0.35em] uppercase block mb-4">Garage local a Marbache</span>
           <h1 className="font-heading text-4xl md:text-6xl text-white font-bold tracking-tight">{content.h1}</h1>
           <p className="mx-auto mt-6 max-w-3xl text-white/62 text-base md:text-lg leading-relaxed">{content.intro}</p>
+          <div className="mx-auto mt-6 flex max-w-3xl flex-wrap items-center justify-center gap-2">
+            {content.keywords.map(keyword => (
+              <span key={keyword} className="border border-white/10 bg-white/[0.03] px-3 py-1 text-white/45 text-[10px] uppercase tracking-[0.16em]">
+                {keyword}
+              </span>
+            ))}
+          </div>
           <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href={`tel:${settings.phone.replace(/\s/g, "")}`}
@@ -1953,24 +2193,44 @@ function LocalSeoPage({ localPage, navigate, settings }: {
             <h2 className="font-heading text-3xl md:text-4xl text-white font-bold mb-5">{content.title}</h2>
             <div className="space-y-5 text-white/58 text-sm md:text-base leading-relaxed">
               <p>{content.travel}</p>
-              <p>
-                L'adresse du garage est bien {settings.address}, {settings.postalCode} {settings.city}. Les pages locales servent a aider les clients des communes voisines a trouver un atelier auto moto proche, sans indiquer une fausse implantation.
-              </p>
-              <p>
-                AMC Auto Moto intervient sur l'entretien courant, la revision, la vidange, les pneus, le freinage, le diagnostic electronique, la climatisation et l'entretien moto.
-              </p>
+              {content.paragraphs.map(paragraph => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
+              <button onClick={() => navigate("accueil")} className="border border-white/16 px-5 py-3 text-white/70 text-xs font-bold uppercase tracking-[0.16em] hover:text-white hover:border-white/35 transition-colors">
+                Accueil
+              </button>
               <button onClick={() => navigate("services")} className="border border-white/16 px-5 py-3 text-white/70 text-xs font-bold uppercase tracking-[0.16em] hover:text-white hover:border-white/35 transition-colors">
                 Voir les services
               </button>
               <button onClick={() => navigate("galerie")} className="border border-white/16 px-5 py-3 text-white/70 text-xs font-bold uppercase tracking-[0.16em] hover:text-white hover:border-white/35 transition-colors">
                 Voir les offres
               </button>
+              <button onClick={() => navigate("contact")} className="border border-white/16 px-5 py-3 text-white/70 text-xs font-bold uppercase tracking-[0.16em] hover:text-white hover:border-white/35 transition-colors">
+                Contact
+              </button>
             </div>
           </div>
 
           <aside className="border border-white/10 bg-[#0c0c0c] p-7 md:p-9">
+            <div className="mb-8 overflow-hidden border border-white/10 bg-[#111111]">
+              <iframe
+                title={`Carte AMC Auto Moto depuis ${content.city}`}
+                src={mapSrc}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="h-64 w-full grayscale"
+              />
+            </div>
+            <div className="mb-8 border border-white/10 bg-[#111111] p-5">
+              <p className="text-[#c8102e] text-[10px] tracking-[0.3em] uppercase mb-3">Adresse reelle</p>
+              <p className="text-white font-semibold">{settings.address}</p>
+              <p className="text-white/55 text-sm mt-1">{settings.postalCode} {settings.city}</p>
+              <a href={`tel:${settings.phone.replace(/\s/g, "")}`} className="mt-5 inline-flex items-center gap-2 text-[#c8102e] text-xs font-bold uppercase tracking-[0.16em]">
+                <Phone size={13} /> {settings.phone}
+              </a>
+            </div>
             <p className="text-[#c8102e] text-[10px] tracking-[0.3em] uppercase mb-4">Zones proches</p>
             <div className="space-y-3">
               {nearbyPages.map(([key, item]) => (
@@ -1985,6 +2245,21 @@ function LocalSeoPage({ localPage, navigate, settings }: {
               ))}
             </div>
           </aside>
+        </div>
+      </section>
+
+      <section id="faq" className="mx-auto max-w-7xl px-6 pb-16 md:pb-20">
+        <div className="border border-white/10 bg-[#111111] p-7 md:p-9">
+          <span className="text-[#c8102e] text-[10px] tracking-[0.35em] uppercase block mb-4">FAQ locale</span>
+          <h2 className="font-heading text-3xl md:text-4xl text-white font-bold mb-7">Questions frequentes autour de {content.city}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/8">
+            {content.faqs.map(item => (
+              <article key={item.question} className="bg-[#0c0c0c] p-6">
+                <h3 className="font-heading text-xl text-white font-bold mb-3">{item.question}</h3>
+                <p className="text-white/55 text-sm leading-relaxed">{item.answer}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
     </div>
@@ -2293,6 +2568,12 @@ export default function App() {
           )}
           {page === "localFrouard" && (
             <motion.div key="localFrouard" {...pageTransition}><LocalSeoPage localPage="localFrouard" navigate={navigate} settings={settings} /></motion.div>
+          )}
+          {page === "localLiverdun" && (
+            <motion.div key="localLiverdun" {...pageTransition}><LocalSeoPage localPage="localLiverdun" navigate={navigate} settings={settings} /></motion.div>
+          )}
+          {page === "localCustines" && (
+            <motion.div key="localCustines" {...pageTransition}><LocalSeoPage localPage="localCustines" navigate={navigate} settings={settings} /></motion.div>
           )}
           {page === "localBlenod" && (
             <motion.div key="localBlenod" {...pageTransition}><LocalSeoPage localPage="localBlenod" navigate={navigate} settings={settings} /></motion.div>
