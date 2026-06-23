@@ -16,7 +16,7 @@ import articleEthanolImg from "@/imports/journal disans que le garage MAC Auto M
 import articleSolidarityImg from "@/imports/journal disant ungeste solidaire pour le festival des colporteur d'histoire.avif"
 import { projectId, publicAnonKey } from "/utils/supabase/info"
 
-type Page = "accueil" | "services" | "galerie" | "apropos" | "contact" | "admin"
+type Page = "accueil" | "services" | "galerie" | "apropos" | "contact" | "admin" | "localPont" | "localPompey" | "localFrouard" | "localBlenod" | "localDieulouard" | "localNancy"
 
 const PAGE_PATHS: Record<Page, string> = {
   accueil: "/",
@@ -25,6 +25,12 @@ const PAGE_PATHS: Record<Page, string> = {
   apropos: "/about",
   contact: "/contact",
   admin: "/admin",
+  localPont: "/garage-pont-a-mousson",
+  localPompey: "/garage-pompey",
+  localFrouard: "/garage-frouard",
+  localBlenod: "/garage-blenod-les-pont-a-mousson",
+  localDieulouard: "/garage-dieulouard",
+  localNancy: "/garage-nancy",
 }
 
 const pathToPage = (path: string): Page => {
@@ -34,6 +40,12 @@ const pathToPage = (path: string): Page => {
   if (cleanPath === "/about") return "apropos"
   if (cleanPath === "/contact") return "contact"
   if (cleanPath === "/admin") return "admin"
+  if (cleanPath === "/garage-pont-a-mousson") return "localPont"
+  if (cleanPath === "/garage-pompey") return "localPompey"
+  if (cleanPath === "/garage-frouard") return "localFrouard"
+  if (cleanPath === "/garage-blenod-les-pont-a-mousson") return "localBlenod"
+  if (cleanPath === "/garage-dieulouard") return "localDieulouard"
+  if (cleanPath === "/garage-nancy") return "localNancy"
   return "accueil"
 }
 
@@ -62,6 +74,30 @@ const SEO_BY_PAGE: Record<Page, { title: string; description: string }> = {
   admin: {
     title: "Administration | AMC Auto Moto",
     description: "Espace reserve a l'equipe AMC Auto Moto.",
+  },
+  localPont: {
+    title: "Garage a Marbache pres de Pont-a-Mousson | AMC Auto Moto",
+    description: "AMC Auto Moto, garage auto moto a Marbache, accessible depuis Pont-a-Mousson pour entretien, reparation, diagnostic, pneus et climatisation.",
+  },
+  localPompey: {
+    title: "Garage auto moto proche de Pompey | AMC Auto Moto Marbache",
+    description: "Garage independant a Marbache proche de Pompey pour revision, pneus, diagnostic, climatisation, mecanique auto et entretien moto.",
+  },
+  localFrouard: {
+    title: "Garage auto moto pres de Frouard | AMC Auto Moto Marbache",
+    description: "AMC Auto Moto vous accueille a Marbache, pres de Frouard, pour entretien automobile, reparation moto, pneus, diagnostic et climatisation.",
+  },
+  localBlenod: {
+    title: "Garage pres de Blenod-les-Pont-a-Mousson | AMC Auto Moto",
+    description: "Garage auto moto a Marbache, accessible depuis Blenod-les-Pont-a-Mousson pour revision, reparation, pneus et diagnostic.",
+  },
+  localDieulouard: {
+    title: "Garage auto moto pres de Dieulouard | AMC Auto Moto Marbache",
+    description: "AMC Auto Moto, garage independant a Marbache pres de Dieulouard, pour entretien, reparation, diagnostic et climatisation.",
+  },
+  localNancy: {
+    title: "Garage automobile pres de Nancy | AMC Auto Moto Marbache",
+    description: "Garage auto moto a Marbache pres de Nancy pour revision, mecanique generale, diagnostic, pneus, climatisation et entretien moto.",
   },
 }
 
@@ -292,6 +328,57 @@ const PRESS_CLIPPINGS = [
   { src: articleSolidarityImg, title: "Action solidaire locale", source: "L'Est Républicain" },
   { src: serviceIciImg, title: "Carrosserie, pare-brise, climatisation", source: "Services complémentaires" },
 ]
+
+const LOCAL_SEO_PAGES: Record<Exclude<Page, "accueil" | "services" | "galerie" | "apropos" | "contact" | "admin">, {
+  city: string
+  title: string
+  intro: string
+  h1: string
+  travel: string
+}> = {
+  localPont: {
+    city: "Pont-a-Mousson",
+    title: "Garage a Marbache pres de Pont-a-Mousson",
+    h1: "Garage auto moto a Marbache pres de Pont-a-Mousson",
+    intro: "Vous cherchez un garage proche de Pont-a-Mousson sans passer par une grande enseigne impersonnelle ? AMC Auto Moto vous accueille a Marbache pour l'entretien, la reparation et le diagnostic de votre vehicule.",
+    travel: "Depuis Pont-a-Mousson, le garage est facilement accessible pour une revision, un montage de pneus, une intervention mecanique ou une recharge de climatisation.",
+  },
+  localPompey: {
+    city: "Pompey",
+    title: "Garage auto moto proche de Pompey",
+    h1: "Garage auto moto proche de Pompey, a Marbache",
+    intro: "AMC Auto Moto est situe a Marbache, a proximite de Pompey, et accompagne les conducteurs qui veulent un garage local, clair sur les devis et attentif au suivi du vehicule.",
+    travel: "Pour les automobilistes et motards autour de Pompey, l'atelier propose entretien courant, diagnostic, pneus, freinage, climatisation et mecanique generale.",
+  },
+  localFrouard: {
+    city: "Frouard",
+    title: "Garage auto moto pres de Frouard",
+    h1: "Garage auto moto pres de Frouard, installe a Marbache",
+    intro: "Pour une reparation auto ou moto pres de Frouard, AMC Auto Moto vous recoit dans son atelier de Marbache avec une approche simple : diagnostic clair, conseils utiles et tarifs transparents.",
+    travel: "Le garage reste a Marbache, mais il est pratique pour les clients venant de Frouard et des communes du Bassin de Pompey.",
+  },
+  localBlenod: {
+    city: "Blenod-les-Pont-a-Mousson",
+    title: "Garage pres de Blenod-les-Pont-a-Mousson",
+    h1: "Garage a Marbache accessible depuis Blenod-les-Pont-a-Mousson",
+    intro: "AMC Auto Moto accueille les conducteurs venant de Blenod-les-Pont-a-Mousson pour l'entretien auto, l'entretien moto, les pneus, le diagnostic et les interventions mecaniques.",
+    travel: "L'adresse reste bien a Marbache : un atelier local pour les clients du secteur Pont-a-Mousson, Marbache et Val de Lorraine.",
+  },
+  localDieulouard: {
+    city: "Dieulouard",
+    title: "Garage auto moto pres de Dieulouard",
+    h1: "Garage auto moto a Marbache pres de Dieulouard",
+    intro: "Si vous cherchez un garage pres de Dieulouard, AMC Auto Moto propose a Marbache des prestations d'entretien, reparation, diagnostic, pneus et climatisation pour autos et motos.",
+    travel: "Le garage est accessible depuis Dieulouard pour planifier une revision, une intervention rapide ou un controle avant un trajet.",
+  },
+  localNancy: {
+    city: "Nancy",
+    title: "Garage automobile pres de Nancy",
+    h1: "Garage automobile pres de Nancy, a Marbache",
+    intro: "AMC Auto Moto n'est pas situe a Nancy : le garage est installe a Marbache, en Meurthe-et-Moselle, et reste une alternative locale pour les conducteurs qui recherchent un atelier independant pres de Nancy.",
+    travel: "Revision, diagnostic electronique, pneus, climatisation, freinage et entretien moto : l'atelier accompagne les clients du nord de l'agglomeration nanceienne.",
+  },
+}
 
 // --- Navbar -------------------------------------------------------------------
 function Navbar({ current, navigate, settings }: { current: Page; navigate: (p: Page) => void; settings: SiteSettings }) {
@@ -1767,6 +1854,117 @@ function AdminPage({ offers, setOffers, settings, setSettings, navigate }: {
   )
 }
 
+// --- Local SEO Page -----------------------------------------------------------
+function LocalSeoPage({ localPage, navigate, settings }: {
+  localPage: keyof typeof LOCAL_SEO_PAGES
+  navigate: (p: Page) => void
+  settings: SiteSettings
+}) {
+  const content = LOCAL_SEO_PAGES[localPage]
+  const nearbyPages = Object.entries(LOCAL_SEO_PAGES).filter(([key]) => key !== localPage) as [keyof typeof LOCAL_SEO_PAGES, typeof content][]
+
+  return (
+    <div className="pt-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AutoRepair",
+            "@id": `${SITE_URL}/#garage`,
+            name: "AMC Auto Moto",
+            url: `${SITE_URL}${PAGE_PATHS[localPage]}`,
+            telephone: "+33954158772",
+            email: settings.email,
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: settings.address,
+              postalCode: settings.postalCode,
+              addressLocality: settings.city,
+              addressRegion: "Meurthe-et-Moselle",
+              addressCountry: "FR",
+            },
+            areaServed: [content.city, "Marbache", "Meurthe-et-Moselle"],
+            priceRange: "€€",
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: "4.9",
+              reviewCount: "518",
+              bestRating: "5",
+            },
+          }),
+        }}
+      />
+
+      <section className="relative overflow-hidden bg-[#0a0a0a] px-6 py-24">
+        <img src={garageExteriorImg as string} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-12" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0c0c0c]/85 to-[#0c0c0c]" />
+        <div className="relative mx-auto max-w-5xl text-center">
+          <span className="text-[#c8102e] text-[10px] tracking-[0.35em] uppercase block mb-4">Garage local a Marbache</span>
+          <h1 className="font-heading text-4xl md:text-6xl text-white font-bold tracking-tight">{content.h1}</h1>
+          <p className="mx-auto mt-6 max-w-3xl text-white/62 text-base md:text-lg leading-relaxed">{content.intro}</p>
+          <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={`tel:${settings.phone.replace(/\s/g, "")}`}
+              className="flex w-full sm:w-auto items-center justify-center gap-3 bg-[#c8102e] px-8 py-4 text-white text-xs font-bold uppercase tracking-[0.18em] hover:bg-[#a50d26] transition-colors"
+            >
+              <Phone size={14} />
+              Appeler le garage
+            </a>
+            <button
+              onClick={() => navigate("contact")}
+              className="flex w-full sm:w-auto items-center justify-center gap-3 border border-white/20 px-8 py-4 text-white/80 text-xs font-bold uppercase tracking-[0.18em] hover:border-white/45 hover:text-white transition-colors"
+            >
+              Contact et itineraire <ArrowRight size={14} />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.75fr] gap-8">
+          <div className="border border-white/10 bg-[#111111] p-7 md:p-9">
+            <h2 className="font-heading text-3xl md:text-4xl text-white font-bold mb-5">{content.title}</h2>
+            <div className="space-y-5 text-white/58 text-sm md:text-base leading-relaxed">
+              <p>{content.travel}</p>
+              <p>
+                L'adresse du garage est bien {settings.address}, {settings.postalCode} {settings.city}. Les pages locales servent a aider les clients des communes voisines a trouver un atelier auto moto proche, sans indiquer une fausse implantation.
+              </p>
+              <p>
+                AMC Auto Moto intervient sur l'entretien courant, la revision, la vidange, les pneus, le freinage, le diagnostic electronique, la climatisation et l'entretien moto.
+              </p>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <button onClick={() => navigate("services")} className="border border-white/16 px-5 py-3 text-white/70 text-xs font-bold uppercase tracking-[0.16em] hover:text-white hover:border-white/35 transition-colors">
+                Voir les services
+              </button>
+              <button onClick={() => navigate("galerie")} className="border border-white/16 px-5 py-3 text-white/70 text-xs font-bold uppercase tracking-[0.16em] hover:text-white hover:border-white/35 transition-colors">
+                Voir les offres
+              </button>
+            </div>
+          </div>
+
+          <aside className="border border-white/10 bg-[#0c0c0c] p-7 md:p-9">
+            <p className="text-[#c8102e] text-[10px] tracking-[0.3em] uppercase mb-4">Zones proches</p>
+            <div className="space-y-3">
+              {nearbyPages.map(([key, item]) => (
+                <button
+                  key={key}
+                  onClick={() => navigate(key)}
+                  className="block w-full border border-white/10 bg-[#111111] px-4 py-3 text-left text-white/65 hover:text-white hover:border-[#c8102e]/45 transition-colors"
+                >
+                  <span className="font-heading text-lg font-bold">{item.city}</span>
+                  <span className="block text-white/35 text-xs mt-1">Garage a Marbache proche du secteur</span>
+                </button>
+              ))}
+            </div>
+          </aside>
+        </div>
+      </section>
+    </div>
+  )
+}
+
 // --- À propos Page ------------------------------------------------------------
 function AProposPage({ navigate, settings }: { navigate: (p: Page) => void; settings: SiteSettings }) {
   return (
@@ -2056,6 +2254,24 @@ export default function App() {
           )}
           {page === "contact"  && (
             <motion.div key="contact"  {...pageTransition}><ContactPage settings={settings} /></motion.div>
+          )}
+          {page === "localPont" && (
+            <motion.div key="localPont" {...pageTransition}><LocalSeoPage localPage="localPont" navigate={navigate} settings={settings} /></motion.div>
+          )}
+          {page === "localPompey" && (
+            <motion.div key="localPompey" {...pageTransition}><LocalSeoPage localPage="localPompey" navigate={navigate} settings={settings} /></motion.div>
+          )}
+          {page === "localFrouard" && (
+            <motion.div key="localFrouard" {...pageTransition}><LocalSeoPage localPage="localFrouard" navigate={navigate} settings={settings} /></motion.div>
+          )}
+          {page === "localBlenod" && (
+            <motion.div key="localBlenod" {...pageTransition}><LocalSeoPage localPage="localBlenod" navigate={navigate} settings={settings} /></motion.div>
+          )}
+          {page === "localDieulouard" && (
+            <motion.div key="localDieulouard" {...pageTransition}><LocalSeoPage localPage="localDieulouard" navigate={navigate} settings={settings} /></motion.div>
+          )}
+          {page === "localNancy" && (
+            <motion.div key="localNancy" {...pageTransition}><LocalSeoPage localPage="localNancy" navigate={navigate} settings={settings} /></motion.div>
           )}
           {page === "admin"    && (
             <motion.div key="admin"    {...pageTransition}><AdminPage offers={offers} setOffers={setOffers} settings={settings} setSettings={setSettings} navigate={navigate} /></motion.div>
