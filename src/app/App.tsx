@@ -6,7 +6,7 @@ import {
   ArrowRight, Mail, CheckCircle, Plus, Pencil, Trash2, LogOut, Lock,
   Instagram, CreditCard, Star,
 } from "lucide-react"
-import { motion, AnimatePresence } from "motion/react"
+import { motion, AnimatePresence, useReducedMotion } from "motion/react"
 import logoImg from "@/imports/image-2.png"
 import garageExteriorImg from "@/imports/garage-exterieur.webp"
 import garageInteriorImg from "@/imports/garage-interieur.webp"
@@ -220,9 +220,24 @@ const api = {
   getHistory: () => fetch(`${API}/history`, { headers }).then(r => r.json()) as Promise<HistoryEntry[]>,
 }
 
+function runAfterInitialPaint(task: () => void) {
+  const win = window as Window & {
+    requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number
+    cancelIdleCallback?: (handle: number) => void
+  }
+
+  if (win.requestIdleCallback) {
+    const handle = win.requestIdleCallback(task, { timeout: 1500 })
+    return () => win.cancelIdleCallback?.(handle)
+  }
+
+  const handle = window.setTimeout(task, 450)
+  return () => window.clearTimeout(handle)
+}
+
 // --- Image URLs ---------------------------------------------------------------
 const IMGS = {
-  hero:     "https://images.unsplash.com/photo-1676018366904-c083ed678e60?w=1920&h=1080&fit=crop&auto=format",
+  hero:     "/images/hero-garage.webp",
   about:    "https://images.unsplash.com/photo-1632405862117-236585cfb757?w=1200&h=800&fit=crop&auto=format",
   tools:    "https://images.unsplash.com/photo-1570129476815-ba368ac77013?w=800&h=600&fit=crop&auto=format",
   workshop: "https://images.unsplash.com/photo-1560801124-4a95dc193b94?w=800&h=600&fit=crop&auto=format",
@@ -894,32 +909,30 @@ function CustomerReviewsCarousel() {
 }
 
 function HomePage({ navigate, settings }: { navigate: (p: Page) => void; settings: SiteSettings }) {
+  const prefersReducedMotion = useReducedMotion()
+
   return (
-    <motion.div {...pageTransition}>
+    <div>
       {/* Hero */}
       <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-[#050505] py-24 sm:py-28">
         {/* Parallax background */}
-        <motion.img
+        <img
           src={IMGS.hero}
+          srcSet="/images/hero-garage-1280.webp 1280w, /images/hero-garage.webp 1920w"
+          sizes="100vw"
           alt="Mécanicien au travail"
           width={1920}
           height={1080}
           loading="eager"
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover"
-          initial={{ opacity: 0, scale: 1.08 }}
-          animate={{ opacity: 0.38, scale: 1 }}
-          transition={{ duration: 1.6, ease: "easeOut" }}
+          className="absolute inset-0 w-full h-full object-cover opacity-[0.38]"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.72)_0%,rgba(5,5,5,0.46)_38%,rgba(5,5,5,0.9)_100%)]" />
 
 
-        <motion.div
+        <div
           className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto w-full"
-          variants={stagger(0.15)}
-          initial="hidden"
-          animate="show"
         >
           {/* Logo hero */}
           <motion.div
@@ -953,8 +966,8 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
             Votre expert<br />
             <motion.span
               className="text-[#c8102e] inline-block"
-              animate={{ opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              animate={prefersReducedMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+              transition={prefersReducedMotion ? undefined : { duration: 3, repeat: Infinity, ease: "easeInOut" }}
             >
               Auto & Moto
             </motion.span>
@@ -994,13 +1007,13 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
               </div>
             ))}
           </motion.div>
-        </motion.div>
+        </div>
 
         {/* Scroll indicator */}
         <motion.div
           className="absolute bottom-5 sm:bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-3 text-white/25"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          animate={prefersReducedMotion ? undefined : { y: [0, 8, 0] }}
+          transition={prefersReducedMotion ? undefined : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
           <span className="text-[9px] tracking-[0.35em] uppercase">Défiler</span>
           <div className="w-px h-10 bg-gradient-to-b from-white/25 to-transparent" />
@@ -1012,8 +1025,8 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
         <div className="relative whitespace-nowrap py-4">
           <motion.div
             className="flex w-max items-center"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            animate={prefersReducedMotion ? undefined : { x: ["0%", "-50%"] }}
+            transition={prefersReducedMotion ? undefined : { duration: 30, repeat: Infinity, ease: "linear" }}
           >
             {[0, 1].map((copy) => (
               <div key={copy} className="flex shrink-0 items-center gap-16 pr-16">
@@ -1054,8 +1067,8 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
               <span className="text-white/35 text-[10px] tracking-[0.25em] uppercase mt-1.5">{label}</span>
             </motion.div>
           ))}
-        </div>
-      </motion.section>
+          </div>
+        </motion.section>
 
       <section className="px-4 sm:px-6 py-18 md:py-24 bg-[#0a0a0a] border-b border-white/8">
         <motion.div
@@ -1463,7 +1476,7 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
           </motion.a>
         </div>
       </motion.section>
-    </motion.div>
+    </div>
   )
 }
 
@@ -2631,10 +2644,12 @@ export default function App() {
   const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS)
 
   useEffect(() => {
-    api.getOffers().then(setOffers).catch(err => console.log("Erreur chargement offres:", err))
-    api.getSettings().then(s => {
-      if (s && Object.keys(s).length > 0) setSettings({ ...DEFAULT_SETTINGS, ...s })
-    }).catch(err => console.log("Erreur chargement settings:", err))
+    return runAfterInitialPaint(() => {
+      api.getOffers().then(setOffers).catch(err => console.log("Erreur chargement offres:", err))
+      api.getSettings().then(s => {
+        if (s && Object.keys(s).length > 0) setSettings({ ...DEFAULT_SETTINGS, ...s })
+      }).catch(err => console.log("Erreur chargement settings:", err))
+    })
   }, [])
 
   useEffect(() => {
