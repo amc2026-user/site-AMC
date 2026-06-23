@@ -65,8 +65,8 @@ const SEO_BY_PAGE: Record<Page, { title: string; description: string }> = {
     description: "Revision, vidange, pneus, diagnostic, climatisation, mecanique generale et entretien moto chez AMC Auto Moto a Marbache.",
   },
   galerie: {
-    title: "Offres et promotions | AMC Auto Moto Marbache",
-    description: "Consultez les offres en cours du garage AMC Auto Moto a Marbache pour l'entretien et la reparation auto et moto.",
+    title: "Offres et annonces | AMC Auto Moto Marbache",
+    description: "Consultez les offres et annonces du garage AMC Auto Moto a Marbache pour l'entretien et la reparation auto et moto.",
   },
   apropos: {
     title: "A propos du garage | AMC Auto Moto Marbache",
@@ -254,7 +254,7 @@ const pageTransition = {
 const NAV: { label: string; page: Page }[] = [
   { label: "Accueil",  page: "accueil" },
   { label: "Services", page: "services" },
-  { label: "Offres",   page: "galerie" },
+  { label: "Offres et Annonces", page: "galerie" },
   { label: "À propos", page: "apropos" },
   { label: "Contact",  page: "contact" },
 ]
@@ -1597,8 +1597,8 @@ function GaleriePage({ offers, settings }: { offers: Offer[]; settings: SiteSett
   return (
     <div className="pt-16 min-h-screen flex flex-col">
       <div className="py-24 px-6 text-center">
-        <span className="text-[#c8102e] text-[10px] tracking-[0.35em] uppercase block mb-4">Bons plans & promotions</span>
-        <h1 className="font-heading text-5xl md:text-6xl text-white font-bold tracking-tight">Nos offres</h1>
+        <span className="text-[#c8102e] text-[10px] tracking-[0.35em] uppercase block mb-4">Bons plans, promotions & annonces</span>
+        <h1 className="font-heading text-5xl md:text-6xl text-white font-bold tracking-tight">Offres et Annonces</h1>
       </div>
 
       <div className="flex-1 px-6 pb-24 max-w-7xl mx-auto w-full">
@@ -1753,7 +1753,7 @@ function AdminPage({ offers, setOffers, settings, setSettings, navigate }: {
   const inp = "w-full bg-[#0c0c0c] border border-white/14 text-white px-4 py-3 text-sm focus:border-[#c8102e]/70 focus:ring-2 focus:ring-[#c8102e]/15 focus:outline-none transition-colors placeholder:text-white/25"
   const lbl = "text-white/50 text-[10px] tracking-[0.2em] uppercase block mb-2"
   const adminTabs: { id: typeof tab; label: string; help: string }[] = [
-    { id: "offres", label: "Offres", help: `${offers.length} publiée${offers.length > 1 ? "s" : ""}` },
+    { id: "offres", label: "Offres et annonces", help: `${offers.length} publiée${offers.length > 1 ? "s" : ""}` },
     { id: "contact", label: "Contact", help: "Coordonnées & horaires" },
     { id: "textes", label: "Textes", help: "Accueil, contact, à propos" },
     { id: "historique", label: "Historique", help: "Modifs des 3 jours" },
@@ -1933,7 +1933,7 @@ function AdminPage({ offers, setOffers, settings, setSettings, navigate }: {
           <div className="flex items-center gap-3">
             {tab === "offres" && (
               <button onClick={openNew} className="flex items-center gap-2 bg-[#c8102e] text-white px-4 py-3 font-bold tracking-[0.15em] uppercase text-xs hover:bg-[#a50d26] transition-colors">
-                <Plus size={13} /> Nouvelle offre
+                <Plus size={13} /> Nouvelle annonce
               </button>
             )}
             <button onClick={() => navigate("accueil")} className="border border-white/12 text-white/55 text-xs hover:text-white hover:border-white/30 transition-colors px-4 py-3 font-bold tracking-[0.14em] uppercase">
@@ -1949,7 +1949,7 @@ function AdminPage({ offers, setOffers, settings, setSettings, navigate }: {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
           <div className="bg-[#111111] border border-white/10 p-5">
-            <p className="text-white/35 text-[10px] tracking-[0.22em] uppercase mb-2">Offres actives</p>
+            <p className="text-white/35 text-[10px] tracking-[0.22em] uppercase mb-2">Offres et annonces actives</p>
             <p className="font-heading text-3xl text-white font-bold">{offers.length}</p>
           </div>
           <div className="bg-[#111111] border border-white/10 p-5">
@@ -1966,7 +1966,7 @@ function AdminPage({ offers, setOffers, settings, setSettings, navigate }: {
           </div>
         </div>
 
-        {/* -- TAB: OFFRES -- */}
+        {/* -- TAB: OFFRES ET ANNONCES -- */}
         {tab === "offres" && (<>
           {showForm && (
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
@@ -2327,7 +2327,7 @@ function LocalSeoPage({ localPage, navigate, settings }: {
                 Voir les services
               </button>
               <button onClick={() => navigate("galerie")} className="border border-white/16 px-5 py-3 text-white/70 text-xs font-bold uppercase tracking-[0.16em] hover:text-white hover:border-white/35 transition-colors">
-                Voir les offres
+                Voir les offres et annonces
               </button>
               <button onClick={() => navigate("contact")} className="border border-white/16 px-5 py-3 text-white/70 text-xs font-bold uppercase tracking-[0.16em] hover:text-white hover:border-white/35 transition-colors">
                 Contact
