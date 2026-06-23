@@ -172,4 +172,17 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  .review-carousel,
+  .review-carousel * {
+    user-select: none;
+  }
+
+  .review-carousel {
+    cursor: grab;
+  }
+
+  .review-carousel.is-dragging {
+    cursor: grabbing;
+  }
 }

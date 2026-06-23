@@ -777,6 +777,7 @@ function CustomerReviewsCarousel() {
   const startXRef = useRef(0)
   const startScrollLeftRef = useRef(0)
   const [paused, setPaused] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
 
   const scrollByCard = (direction: 1 | -1) => {
     const track = trackRef.current
@@ -793,6 +794,7 @@ function CustomerReviewsCarousel() {
     startXRef.current = event.clientX
     startScrollLeftRef.current = track.scrollLeft
     setPaused(true)
+    setIsDragging(true)
     track.setPointerCapture(event.pointerId)
   }
 
@@ -805,6 +807,7 @@ function CustomerReviewsCarousel() {
 
   const stopDragging = () => {
     isDraggingRef.current = false
+    setIsDragging(false)
   }
 
   useEffect(() => {
@@ -830,7 +833,7 @@ function CustomerReviewsCarousel() {
     >
       <div
         ref={trackRef}
-        className="flex cursor-grab gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-1 active:cursor-grabbing [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className={`review-carousel flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden ${isDragging ? "is-dragging" : ""}`}
         aria-label="Carrousel d'avis clients AMC Auto Moto"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
