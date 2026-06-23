@@ -185,4 +185,23 @@
   .review-carousel.is-dragging {
     cursor: grabbing;
   }
+
+  .hero-title-accent {
+    animation: hero-title-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes hero-title-pulse {
+    0%, 100% {
+      opacity: 0.7;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-title-accent {
+      animation: none;
+    }
+  }
 }

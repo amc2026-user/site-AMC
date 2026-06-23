@@ -959,19 +959,12 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
             {settings.city} · {settings.postalCode} · Meurthe-et-Moselle
           </motion.div>
 
-          <motion.h1
-            variants={fadeUp}
-            className="font-heading text-[clamp(2.45rem,7.6vw,6.3rem)] text-white font-bold leading-[0.96] tracking-tight mb-5 sm:mb-6 break-words drop-shadow-[0_12px_35px_rgba(0,0,0,0.45)]"
-          >
+          <h1 className="font-heading text-[clamp(2.45rem,7.6vw,6.3rem)] text-white font-bold leading-[0.96] tracking-tight mb-5 sm:mb-6 break-words drop-shadow-[0_12px_35px_rgba(0,0,0,0.45)]">
             Votre expert<br />
-            <motion.span
-              className="text-[#c8102e] inline-block"
-              animate={prefersReducedMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
-              transition={prefersReducedMotion ? undefined : { duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            >
+            <span className="hero-title-accent text-[#c8102e] inline-block">
               Auto & Moto
-            </motion.span>
-          </motion.h1>
+            </span>
+          </h1>
 
           <motion.p variants={fadeUp} className="text-white/72 text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-10">
             {settings.heroSubtitle}
