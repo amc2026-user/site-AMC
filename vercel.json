@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    { "source": "/nous-contacter", "destination": "/contact", "permanent": true },
+    { "source": "/prestations-motos", "destination": "/services", "permanent": true },
+    { "source": "/prestations-autos", "destination": "/services", "permanent": true },
+    { "source": "/nos-services", "destination": "/services", "permanent": true },
+    { "source": "/on-parle-de-nous", "destination": "/about", "permanent": true },
+    { "source": "/documentation", "destination": "/", "permanent": true },
+    { "source": "/offre-en-cours", "destination": "/offres", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/((?!api|assets|icons|site.webmanifest|favicon.ico).*)", "destination": "/index.html" }
+  ]
+}

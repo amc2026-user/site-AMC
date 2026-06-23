@@ -18,6 +18,25 @@ import { projectId, publicAnonKey } from "/utils/supabase/info"
 
 type Page = "accueil" | "services" | "galerie" | "apropos" | "contact" | "admin"
 
+const PAGE_PATHS: Record<Page, string> = {
+  accueil: "/",
+  services: "/services",
+  galerie: "/offres",
+  apropos: "/about",
+  contact: "/contact",
+  admin: "/admin",
+}
+
+const pathToPage = (path: string): Page => {
+  const cleanPath = path.replace(/\/+$/, "") || "/"
+  if (cleanPath === "/services") return "services"
+  if (cleanPath === "/offres") return "galerie"
+  if (cleanPath === "/about") return "apropos"
+  if (cleanPath === "/contact") return "contact"
+  if (cleanPath === "/admin") return "admin"
+  return "accueil"
+}
+
 interface Offer {
   id: string
   title: string
@@ -1945,7 +1964,7 @@ function ContactPage({ settings }: { settings: SiteSettings }) {
 
 // --- App Root -----------------------------------------------------------------
 export default function App() {
-  const [page, setPage] = useState<Page>("accueil")
+  const [page, setPage] = useState<Page>(() => pathToPage(window.location.pathname))
   const [offers, setOffers] = useState<Offer[]>([])
   const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS)
 
@@ -1956,8 +1975,16 @@ export default function App() {
     }).catch(err => console.log("Erreur chargement settings:", err))
   }, [])
 
+  useEffect(() => {
+    const handlePopState = () => setPage(pathToPage(window.location.pathname))
+    window.addEventListener("popstate", handlePopState)
+    return () => window.removeEventListener("popstate", handlePopState)
+  }, [])
+
   const navigate = (p: Page) => {
     setPage(p)
+    const nextPath = PAGE_PATHS[p]
+    if (window.location.pathname !== nextPath) window.history.pushState(null, "", nextPath)
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
