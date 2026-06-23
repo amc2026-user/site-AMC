@@ -1,0 +1,34 @@
+# AMC Auto Moto
+
+Site officiel du garage AMC Auto Moto, garage auto et moto situe a Marbache en Meurthe-et-Moselle.
+
+AMC Auto Moto propose l'entretien, la reparation, le diagnostic, les pneus, le freinage, la climatisation, la revision et les services auto et moto.
+
+## Coordonnees
+
+- Nom : AMC Auto Moto
+- Adresse : 5 Chemin de Saizerelle, 54820 Marbache, France
+- Telephone : 09 54 15 87 72
+- Email : amcautomoto@gmail.com
+
+## Pages principales
+
+- https://www.amcautomoto.com/
+- https://www.amcautomoto.com/services
+- https://www.amcautomoto.com/offres
+- https://www.amcautomoto.com/about
+- https://www.amcautomoto.com/contact
+
+## Pages locales
+
+- https://www.amcautomoto.com/garage-pont-a-mousson
+- https://www.amcautomoto.com/garage-pompey
+- https://www.amcautomoto.com/garage-frouard
+- https://www.amcautomoto.com/garage-blenod-les-pont-a-mousson
+- https://www.amcautomoto.com/garage-dieulouard
+- https://www.amcautomoto.com/garage-nancy
+
+## Sources de confiance
+
+- Facebook : https://www.facebook.com/amcautomoto/
+- Avis AlloGarage : https://www.allogarage.fr/garages/details-garage-AMC-AUTO-MOTO-47503.html

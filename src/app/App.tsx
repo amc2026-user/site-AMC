@@ -7,8 +7,8 @@ import {
 } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
 import logoImg from "@/imports/image-2.png"
-import garageExteriorImg from "@/imports/image garage exterieur.png"
-import garageInteriorImg from "@/imports/image garage interrieur voiture premier plan.png"
+import garageExteriorImg from "@/imports/garage-exterieur.webp"
+import garageInteriorImg from "@/imports/garage-interieur.webp"
 import serviceIciImg from "@/imports/affiche-services-ici.png"
 import articleSelectionImg from "@/imports/image montran le garage de cedric.avif"
 import articleOpeningImg from "@/imports/journal affichant cedric qui ouvre son nouveau garage.avif"
@@ -406,6 +406,9 @@ function Navbar({ current, navigate, settings }: { current: Page; navigate: (p: 
           <img
             src={logoImg as string}
             alt="AMC Auto Moto"
+            width={140}
+            height={122}
+            decoding="async"
             className="h-10 w-10 sm:h-12 sm:w-12 object-contain shrink-0"
           />
           <span className="font-heading text-white font-bold text-sm xl:text-base tracking-[0.12em] xl:tracking-[0.15em] uppercase hidden sm:block whitespace-nowrap">
@@ -482,7 +485,7 @@ function Footer({ navigate, settings }: { navigate: (p: Page) => void; settings:
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 mb-12">
           <div>
             <div className="flex items-center gap-3 mb-5">
-              <img src={logoImg as string} alt="AMC Auto Moto" className="h-10 w-10 object-contain" />
+              <img src={logoImg as string} alt="AMC Auto Moto" width={140} height={122} loading="lazy" decoding="async" className="h-10 w-10 object-contain" />
               <span className="font-heading text-white font-bold tracking-[0.15em] uppercase">
                 AMC Auto Moto
               </span>
@@ -570,6 +573,11 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
         <motion.img
           src={IMGS.hero}
           alt="Mécanicien au travail"
+          width={1920}
+          height={1080}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           className="absolute inset-0 w-full h-full object-cover"
           initial={{ opacity: 0, scale: 1.08 }}
           animate={{ opacity: 0.38, scale: 1 }}
@@ -593,6 +601,10 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
             <img
               src={logoImg as string}
               alt="AMC Auto Moto"
+              width={140}
+              height={122}
+              loading="eager"
+              decoding="async"
               className="h-[clamp(4.75rem,13vw,9.5rem)] w-[clamp(4.75rem,13vw,9.5rem)] max-h-[18svh] max-w-[18svh] object-contain relative z-10"
             />
           </motion.div>
@@ -751,7 +763,7 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
                 <p className="text-white/35 text-[10px] tracking-[0.25em] uppercase mb-3">Source vérifiée</p>
                 <p className="font-heading text-2xl text-white font-bold">AlloGarage</p>
               </div>
-              <div className="flex items-center gap-1 text-[#c8102e]" aria-label="Note de 4,9 sur 5">
+              <div className="flex items-center gap-1 text-[#c8102e]" role="img" aria-label="Note de 4,9 sur 5">
                 {[0, 1, 2, 3, 4].map((star) => (
                   <Star key={star} size={22} fill="currentColor" strokeWidth={1.4} />
                 ))}
@@ -782,7 +794,7 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
               ].map((review) => (
                 <div key={review} className="border border-white/10 bg-[#111111] p-4">
                   <div className="flex items-center justify-between gap-3 mb-3">
-                    <div className="flex items-center gap-0.5 text-[#c8102e]" aria-label="Avis 5 sur 5">
+                    <div className="flex items-center gap-0.5 text-[#c8102e]" role="img" aria-label="Avis 5 sur 5">
                       {[0, 1, 2, 3, 4].map((star) => (
                         <Star key={star} size={13} fill="currentColor" strokeWidth={1.5} />
                       ))}
@@ -826,6 +838,10 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
                 <img
                   src={GARAGE_PHOTOS[1].src as string}
                   alt={GARAGE_PHOTOS[1].title}
+                  width={1448}
+                  height={1086}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-left opacity-95 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700"
                 />
               </div>
@@ -842,6 +858,10 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
                 <img
                   src={GARAGE_PHOTOS[0].src as string}
                   alt={GARAGE_PHOTOS[0].title}
+                  width={1448}
+                  height={1086}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700"
                 />
               </div>
@@ -883,6 +903,10 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
                   <img
                     src={src as string}
                     alt={title}
+                    width={640}
+                    height={800}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-95"
                   />
                 </div>
@@ -1142,6 +1166,8 @@ function ServicesPage({ navigate, settings }: { navigate: (p: Page) => void; set
           src={IMGS.tools}
           alt=""
           aria-hidden
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 w-full h-full object-cover opacity-10"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0c0c0c]/80 to-[#0c0c0c]" />
@@ -1160,7 +1186,7 @@ function ServicesPage({ navigate, settings }: { navigate: (p: Page) => void; set
           {SERVICES.map(({ title, short, details, img, price }) => (
             <div key={title} className="flex flex-col md:flex-row group hover:bg-white/[0.02] transition-colors duration-300">
               <div className="md:w-64 lg:w-72 shrink-0 overflow-hidden bg-[#1a1a1a]">
-                <img src={img} alt={title} className="w-full h-40 md:h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-[1.03] transition-all duration-500" />
+                <img src={img} alt={title} width={800} height={600} loading="lazy" decoding="async" className="w-full h-40 md:h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-[1.03] transition-all duration-500" />
               </div>
               <div className="flex-1 p-6 sm:p-8 md:p-10">
                 <div className="mb-6">
@@ -1301,7 +1327,7 @@ function GaleriePage({ offers, settings }: { offers: Offer[]; settings: SiteSett
               >
                 {offer.imageUrl && (
                   <div className="overflow-hidden h-48 bg-[#1a1a1a]">
-                    <img src={offer.imageUrl} alt={offer.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img src={offer.imageUrl} alt={offer.title} loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   </div>
                 )}
                 <div className="p-7 flex flex-col flex-1">
@@ -1358,7 +1384,7 @@ function GaleriePage({ offers, settings }: { offers: Offer[]; settings: SiteSett
 
               {selectedOffer.imageUrl && (
                 <div className="bg-[#1a1a1a]">
-                  <img src={selectedOffer.imageUrl} alt={selectedOffer.title} className="w-full max-h-[58vh] object-contain" />
+                  <img src={selectedOffer.imageUrl} alt={selectedOffer.title} loading="eager" decoding="async" className="w-full max-h-[58vh] object-contain" />
                 </div>
               )}
 
@@ -1672,7 +1698,7 @@ function AdminPage({ offers, setOffers, settings, setSettings, navigate }: {
             <div className="flex flex-col gap-3">
               {offers.map(offer => (
                 <div key={offer.id} className="bg-[#111111] border border-white/8 p-6 flex items-start gap-5">
-                  {offer.imageUrl && <img src={offer.imageUrl} alt={offer.title} className="w-16 h-16 object-cover shrink-0 bg-[#1a1a1a]" />}
+                  {offer.imageUrl && <img src={offer.imageUrl} alt={offer.title} width={64} height={64} loading="lazy" decoding="async" className="w-16 h-16 object-cover shrink-0 bg-[#1a1a1a]" />}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
                       {offer.badge && <span className="bg-[#c8102e] text-white text-[10px] font-bold tracking-widest uppercase px-2 py-0.5">{offer.badge}</span>}
@@ -1897,7 +1923,7 @@ function LocalSeoPage({ localPage, navigate, settings }: {
       />
 
       <section className="relative overflow-hidden bg-[#0a0a0a] px-6 py-24">
-        <img src={garageExteriorImg as string} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-12" />
+        <img src={garageExteriorImg as string} alt="" aria-hidden width={1448} height={1086} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover opacity-12" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0c0c0c]/85 to-[#0c0c0c]" />
         <div className="relative mx-auto max-w-5xl text-center">
           <span className="text-[#c8102e] text-[10px] tracking-[0.35em] uppercase block mb-4">Garage local a Marbache</span>
@@ -1981,6 +2007,10 @@ function AProposPage({ navigate, settings }: { navigate: (p: Page) => void; sett
             <img
               src={IMGS.about}
               alt="Atelier AMC Auto Moto"
+              width={1200}
+              height={800}
+              loading="lazy"
+              decoding="async"
               className="w-full h-[480px] object-cover bg-[#1a1a1a]"
             />
             <div className="absolute bottom-6 right-6 bg-[#c8102e] px-6 py-5">
