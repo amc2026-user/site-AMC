@@ -701,13 +701,13 @@ function Footer({ navigate, settings }: { navigate: (p: Page) => void; settings:
                 AMC Auto Moto
               </span>
             </div>
-            <p className="text-white/40 text-sm leading-relaxed">
+            <p className="text-white/50 text-sm leading-relaxed">
               Garage indépendant spécialisé en entretien et réparation automobile et moto à Marbache, Meurthe-et-Moselle.
             </p>
           </div>
 
           <div>
-            <p className="text-white/30 text-[10px] tracking-[0.25em] uppercase mb-4">Navigation</p>
+            <p className="text-white/50 text-[10px] tracking-[0.25em] uppercase mb-4">Navigation</p>
             <div className="flex flex-col gap-2.5">
               {NAV.map(({ label, page }) => (
                 <button
@@ -719,7 +719,7 @@ function Footer({ navigate, settings }: { navigate: (p: Page) => void; settings:
                 </button>
               ))}
             </div>
-            <p className="text-white/30 text-[10px] tracking-[0.25em] uppercase mt-8 mb-4">Zones desservies</p>
+            <p className="text-white/50 text-[10px] tracking-[0.25em] uppercase mt-8 mb-4">Zones desservies</p>
             <div className="flex flex-col gap-2.5">
               {LOCAL_NAV.map(({ label, page }) => (
                 <button
@@ -734,7 +734,7 @@ function Footer({ navigate, settings }: { navigate: (p: Page) => void; settings:
           </div>
 
           <div>
-            <p className="text-white/30 text-[10px] tracking-[0.25em] uppercase mb-4">Contact</p>
+            <p className="text-white/50 text-[10px] tracking-[0.25em] uppercase mb-4">Contact</p>
             <div className="flex flex-col gap-4">
               <a href={`tel:${settings.phone.replace(/\s/g, "")}`} className="flex items-center gap-3 text-white/50 text-sm hover:text-white transition-colors">
                 <Phone size={13} className="text-[#c8102e] shrink-0" />
@@ -761,20 +761,20 @@ function Footer({ navigate, settings }: { navigate: (p: Page) => void; settings:
                 Lun–Ven {settings.hours[0]?.hours}
               </div>
               <div className="flex items-center gap-4 mt-1">
-                <a href={settings.facebook} target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors text-xs tracking-widest uppercase">Facebook</a>
-                {settings.instagram && <a href={settings.instagram} target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors text-xs tracking-widest uppercase">Instagram</a>}
+                <a href={settings.facebook} target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs tracking-widest uppercase">Facebook</a>
+                {settings.instagram && <a href={settings.instagram} target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs tracking-widest uppercase">Instagram</a>}
               </div>
             </div>
           </div>
         </div>
 
         <div className="border-t border-white/8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-white/20 text-xs">© 2025 AMC Auto Moto — Tous droits réservés</p>
+          <p className="text-white/50 text-xs">© 2025 AMC Auto Moto — Tous droits réservés</p>
           <div className="flex items-center gap-4">
-            <p className="text-white/20 text-xs">{settings.postalCode} {settings.city}, Meurthe-et-Moselle (54)</p>
+            <p className="text-white/50 text-xs">{settings.postalCode} {settings.city}, Meurthe-et-Moselle (54)</p>
             <button
               onClick={() => navigate("admin")}
-              className="text-white/20 hover:text-white/50 transition-colors text-xs px-2 py-1"
+              className="text-white/50 hover:text-white/70 transition-colors text-xs px-2 py-1"
               title="Accès administration"
             >
               Admin
