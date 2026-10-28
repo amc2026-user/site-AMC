@@ -917,7 +917,7 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
       <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-[#050505] py-24 sm:py-28">
         
 {/* Bandeau promotionnel en haut de l'accueil */}
-<div className="absolute top-20 left-0 right-0 z-20 bg-[#c8102e] px-4 py-3">
+<div className="absolute top-20 left-0 right-0 z-20 bg-[#c8102e] px-4 py-3 motion-safe:animate-pulse">
   <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-3 text-center">
     <span className="text-white font-bold text-sm sm:text-base">
       OFFRE SPÉCIALE EN COURS !
@@ -949,7 +949,7 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
 
 
         <div
-          className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto w-full"
+          className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto w-full pt-20 sm:pt-24"
         >
           {/* Logo hero */}
           <motion.div
