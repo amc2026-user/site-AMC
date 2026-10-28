@@ -915,8 +915,25 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
     <div>
       {/* Hero */}
       <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-[#050505] py-24 sm:py-28">
+        
+{/* Bandeau promotionnel en haut de l'accueil */}
+<div className="absolute top-20 left-0 right-0 z-20 bg-[#c8102e] px-4 py-3">
+  <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-3 text-center">
+    <span className="text-white font-bold text-sm sm:text-base">
+      OFFRE SPÉCIALE EN COURS !
+    </span>
+    <button
+      type="button"
+      onClick={() => navigate("offres")}
+      className="bg-black text-white px-5 py-2 text-xs font-bold uppercase hover:bg-white hover:text-black transition-colors"
+    >
+      VOIR L'OFFRE →
+    </button>
+  </div>
+</div>
+
         {/* Parallax background */}
-        <img
+        <imgfffff
           src={IMGS.hero}
           srcSet="/images/hero-garage-1280.webp 1280w, /images/hero-garage.webp 1920w"
           sizes="100vw"
@@ -1013,26 +1030,7 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
         </motion.div>
       </section>
       
-{/* Bandeau promotionnel accueil */}
-<section className="bg-[#c8102e] px-4 py-5">
-  <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
-    <div>
-      <p className="text-white font-bold text-xl">
-        OFFRE SPÉCIALE EN COURS !
-      </p>
-      <p className="text-white/90 text-sm mt-1">
-        Découvrez nos promotions du moment chez AMC AUTO MOTO.
-      </p>
-    </div>
-    <button
-      type="button"
-      onClick={() => navigate("galerie")}
-      className="bg-black text-white px-6 py-3 font-bold uppercase text-sm hover:bg-white hover:text-black transition-colors"
-    >
-      VOIR L'OFFRE →
-    </button>
-  </div>
-</section>
+
 
 
       {/* Climate announcement banner */}
