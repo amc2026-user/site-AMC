@@ -1648,7 +1648,7 @@ function GaleriePage({ offers, settings }: { offers: Offer[]; settings: SiteSett
                 aria-label={`Afficher l'offre ${offer.title} en grand`}
               >
                 {offer.imageUrl && (
-                  <div className="overflow-hidden h-48 bg-[#1a1a1a]">
+                  <div className="overflow-hidden h-[420px] bg-[#1a1a1a]">
                     <img src={offer.imageUrl} alt={offer.title} loading="lazy" decoding="async" className="w-full h-full object-contain" />
                   </div>
                 )}
