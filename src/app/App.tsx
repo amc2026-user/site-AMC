@@ -1649,7 +1649,7 @@ function GaleriePage({ offers, settings }: { offers: Offer[]; settings: SiteSett
               >
                 {offer.imageUrl && (
                   <div className="overflow-hidden h-48 bg-[#1a1a1a]">
-                    <img src={offer.imageUrl} alt={offer.title} loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img src={offer.imageUrl} alt={offer.title} loading="lazy" decoding="async" className="w-full h-full object-contain" />
                   </div>
                 )}
                 <div className="p-7 flex flex-col flex-1">
