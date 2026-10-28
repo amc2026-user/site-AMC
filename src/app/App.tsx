@@ -924,7 +924,7 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
     </span>
     <button
       type="button"
-      onClick={() => navigate("offres")}
+      onClick={() => navigate("galerie")}
       className="bg-black text-white px-5 py-2 text-xs font-bold uppercase hover:bg-white hover:text-black transition-colors"
     >
       VOIR L'OFFRE →
