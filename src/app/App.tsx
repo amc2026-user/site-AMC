@@ -1012,6 +1012,28 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
           <div className="w-px h-10 bg-gradient-to-b from-white/25 to-transparent" />
         </motion.div>
       </section>
+      
+{/* Bandeau promotionnel accueil */}
+<section className="bg-[#c8102e] px-4 py-5">
+  <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+    <div>
+      <p className="text-white font-bold text-xl">
+        OFFRE SPÉCIALE EN COURS !
+      </p>
+      <p className="text-white/90 text-sm mt-1">
+        Découvrez nos promotions du moment chez AMC AUTO MOTO.
+      </p>
+    </div>
+    <button
+      type="button"
+      onClick={() => navigate("galerie")}
+      className="bg-black text-white px-6 py-3 font-bold uppercase text-sm hover:bg-white hover:text-black transition-colors"
+    >
+      VOIR L'OFFRE →
+    </button>
+  </div>
+</section>
+
 
       {/* Climate announcement banner */}
       <section className="bg-[#0077c8] border-y border-[#6ed7ff]/35 overflow-hidden">
