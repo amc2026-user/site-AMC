@@ -933,7 +933,7 @@ function HomePage({ navigate, settings }: { navigate: (p: Page) => void; setting
 </div>
 
         {/* Parallax background */}
-        <imgfffff
+        <img
           src={IMGS.hero}
           srcSet="/images/hero-garage-1280.webp 1280w, /images/hero-garage.webp 1920w"
           sizes="100vw"
